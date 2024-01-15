@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-4">
       <div v-if="serverError">
         <Error500Component/>
       </div>
@@ -7,57 +7,110 @@
         <Error404Component/>
       </div>
       <div v-else-if="client">
-        <h2>Client Details</h2>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModel">
-            <i class="bi bi-trash"></i>
-        </button>
+
         <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion"></client-delete-modal>
 
-        <!-- Display client details if client is not null -->
-        <p>Client ID: {{ client.clientId }}</p>
-        <p>Description: {{ client.description }}</p>
-        <p>clientSecret1Set: {{ client.clientSecret1Set }}</p>
-        <p>clientSecret2Set: {{ client.clientSecret2Set }}</p>
+        <div class="row">
+          <div class="col">
+            <h3>Client</h3>
+            <table class="table">
+              <!-- Table headers here -->
+              <thead>
+                <tr>
+                  <th scope="col">Field</th>
+                  <th scope="col">Value</th>
+                  <th scope="col">
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModel">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Client ID</td>
+                  <td>{{ client.clientId }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <td>{{ client.description }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Client Secret 1</td>
+                  <td>{{ client.clientSecret1Set }}</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>Client Secret 1</td>
+                  <td>{{ client.clientSecret2Set }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <!-- Display authorizations for subjects if client is not null -->
-        <table class="table">
-          <!-- Table headers here -->
-          <thead>
-            <tr>
-              <th scope="col">Authorized as Subject</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Loop through authorizationsAsSubject and display them in rows -->
-            <tr v-for="authorization in client.authorizationsAsSubject" :key="authorization.id">
-              <!--<td>{{ authorization.id }}</td>-->
-              <td>
-                  <router-link :to="'/clients/' + authorization.audience.clientId">{{ authorization.audience.clientId }}</router-link>
-              </td> 
-            </tr>
-          </tbody>
-        </table>
+          <div class="col">
+            <!-- Display authorizations for subjects if client is not null -->
+            <h3>Authorized as Subject</h3>
+            <table class="table">
+              <!-- Table headers here -->
+              <thead>
+                <tr>
+                  <th scope="col">Client Id</th>
+                  <th scope="col" class="text-end">
+                    <button type="button" class="btn btn-success">
+                      <i class="bi bi-plus"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loop through authorizationsAsSubject and display them in rows -->
+                <tr v-for="authorization in client.authorizationsAsSubject" :key="authorization.id">
+                  <!--<td>{{ authorization.id }}</td>-->
+                  <td>{{ authorization.audience.clientId }}</td>
+                  <td class="text-end">
+                    <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
+                      <i class="bi bi-arrow-right"></i>
+                    </router-link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <!-- Display authorizations for audiences if client is not null -->
-        <table class="table">
-          <!-- Table headers here -->
-          <thead>
-            <tr>
-              <th scope="col">Authorized as Audience</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Loop through authorizationsAsAudience and display them in rows -->
-            <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
-              <!-- <td>{{ authorization.id }}</td>-->
-              <td>
-                  <router-link :to="'/clients/' + authorization.subject.clientId">{{ authorization.subject.clientId }}</router-link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-          
+          <div class="col">
+            <!-- Display authorizations for audiences if client is not null -->
+            <h3>Authorized as Audience</h3>
+            <table class="table">
+              <!-- Table headers here -->
+              <thead>
+                <tr>
+                  <th scope="col">Client Id</th>
+                  <th scope="col" class="text-end">
+                    <button type="button" class="btn btn-success">
+                      <i class="bi bi-plus"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loop through authorizationsAsAudience and display them in rows -->
+                <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
+                  <!-- <td>{{ authorization.id }}</td>-->
+                  <td>{{ authorization.subject.clientId }}</td>
+                  <td class="text-end">
+                    <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
+                      <i class="bi bi-arrow-right"></i>
+                    </router-link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
         </div>
         <div v-else>
           <LoadingComponent/>

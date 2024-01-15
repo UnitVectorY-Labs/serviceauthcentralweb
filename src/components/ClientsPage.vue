@@ -1,15 +1,16 @@
 <template>
-    <div class="container">
+    <div class="container mt-4">
         <h2>Clients</h2>
-        <router-link :to="'/client'" class="btn btn-success">
-          <i class="bi bi-plus"></i>
-        </router-link>
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">ClientId</th>
                     <th scope="col">Description</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="text-end">
+                      <router-link :to="'/client'" class="btn btn-success">
+                        <i class="bi bi-plus"></i>
+                      </router-link>
+                    </th>
                 </tr>
             </thead>
             <tbody>
