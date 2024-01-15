@@ -12,7 +12,8 @@
         <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-
+        <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        
         <div class="row">
           <div class="col">
             <h3>Client</h3>
@@ -135,7 +136,7 @@
                   <td>{{ authorization.subject.clientId }}</td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-danger">
+                      <button type="button" class="btn btn-danger"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModel">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
@@ -163,6 +164,7 @@
   import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
   import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
   import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
+  import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
   
   export default {
     name: 'ClientDetailsPage',
@@ -171,6 +173,7 @@
         ClientCreateSecretModal,
         ClientDeleteSecretModal,
         ClientAuthorizeModal,
+        ClientDeauthorizeModal,
     },
     data() {
       return {
@@ -199,8 +202,13 @@
         }
       },
       openDeleteSecretModal(secretType) {
-        if (this.$refs.secretModal) {
+        if (this.$refs.deleteSecretModal) {
           this.$refs.deleteSecretModal.setSecretType(secretType);
+        }
+      },
+      openDeauthorizeModal(subject) {
+        if (this.$refs.deauthorizeModal) {
+          this.$refs.deauthorizeModal.setDeauthorizedSubject(subject);
         }
       },
       resetAuthorize() {
