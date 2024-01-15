@@ -10,6 +10,7 @@
 
         <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion" />
         <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         
         <div class="row">
           <div class="col">
@@ -43,7 +44,7 @@
                   <td>{{ client.clientSecret1Set }}</td>
                   <td>
                     <div v-if="client.clientSecret1Set">
-                      <button type="button" class="btn btn-danger">
+                      <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel">
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
@@ -59,7 +60,7 @@
                   <td>{{ client.clientSecret2Set }}</td>
                   <td>
                     <div v-if="client.clientSecret2Set">
-                      <button type="button" class="btn btn-danger">
+                      <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel">
                         <i class="bi bi-trash"></i>
                       </button>
                     </div>
@@ -157,12 +158,14 @@
   import client from '../apollo-client';
   import ClientDeleteModal from './ClientDeleteModal.vue';
   import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
+  import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
   
   export default {
     name: 'ClientDetailsPage',
     components: {
         ClientDeleteModal,
         ClientCreateSecretModal,
+        ClientDeleteSecretModal,
     },
     data() {
       return {
@@ -188,6 +191,11 @@
         // Assuming the child component has a method named 'generateSecret'
         if (this.$refs.secretModal) {
           this.$refs.secretModal.generateSecret(secretType);
+        }
+      },
+      openDeleteSecretModal(secretType) {
+        if (this.$refs.secretModal) {
+          this.$refs.deleteSecretModal.setSecretType(secretType);
         }
       },
       refreshClient() {

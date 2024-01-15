@@ -58,6 +58,7 @@
             mutation: ADD_CLIENT, 
             variables: { clientId: this.clientId, description: this.description }
           });
+          client.resetStore(); // We made a change so reset the local cache
           this.$router.push('/clients/' + this.clientId);
         } catch (error) {
           console.error("Error submitting form:", error);
