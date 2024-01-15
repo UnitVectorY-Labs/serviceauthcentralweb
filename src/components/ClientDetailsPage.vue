@@ -11,7 +11,8 @@
         <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion" />
         <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        
+        <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+
         <div class="row">
           <div class="col">
             <h3>Client</h3>
@@ -84,7 +85,8 @@
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
-                    <button type="button" class="btn btn-success">
+                    <!-- Right now not allowing granting access to other resources on a client page, just granting access to other clients. -->
+                    <button type="button" class="btn btn-success invisible" disabled="disabled" >
                       <i class="bi bi-plus"></i>
                     </button>
                   </th>
@@ -97,7 +99,8 @@
                   <td>{{ authorization.audience.clientId }}</td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-danger">
+                      <!-- Right now not allowing deauthorize either -->
+                      <button type="button" class="btn btn-danger invisible" disabled="disabled">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
@@ -119,7 +122,7 @@
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
-                    <button type="button" class="btn btn-success">
+                    <button type="button" class="btn btn-success" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
                       <i class="bi bi-plus"></i>
                     </button>
                   </th>
@@ -159,6 +162,7 @@
   import ClientDeleteModal from './ClientDeleteModal.vue';
   import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
   import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
+  import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
   
   export default {
     name: 'ClientDetailsPage',
@@ -166,6 +170,7 @@
         ClientDeleteModal,
         ClientCreateSecretModal,
         ClientDeleteSecretModal,
+        ClientAuthorizeModal,
     },
     data() {
       return {
@@ -198,8 +203,12 @@
           this.$refs.deleteSecretModal.setSecretType(secretType);
         }
       },
+      resetAuthorize() {
+        if(this.$refs.authorizeModal){
+          this.$refs.authorizeModal.resetData();
+        }
+      },
       refreshClient() {
-        console.log("Refreshing client");
         this.loadClient(this.client.clientId, true);
       },
       async loadClient(clientId, refresh) {
