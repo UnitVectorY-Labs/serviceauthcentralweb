@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <h2>Clients</h2>
+        <router-link :to="'/client'" class="btn btn-success">
+          <i class="bi bi-plus"></i>
+        </router-link>
         <table class="table">
             <thead>
                 <tr>

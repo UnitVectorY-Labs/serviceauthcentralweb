@@ -1,7 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" class="d-flex flex-column min-vh-100">
     <MyHeader />
-    <router-view></router-view>
+    <router-view class="flex-grow-1"></router-view>
+    <MyFooter />
   </div>
 </template>
 
@@ -12,4 +13,7 @@ export default {
 </script>
 
 <style>
+  .flex-grow-1 {
+    flex-grow: 1;
+  }
 </style>
