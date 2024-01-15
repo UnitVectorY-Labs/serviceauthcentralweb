@@ -8,8 +8,9 @@
       </div>
       <div v-else-if="client">
 
-        <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion"></client-delete-modal>
-
+        <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion" />
+        <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        
         <div class="row">
           <div class="col">
             <h3>Client</h3>
@@ -40,12 +41,34 @@
                 <tr>
                   <td>Client Secret 1</td>
                   <td>{{ client.clientSecret1Set }}</td>
-                  <td></td>
+                  <td>
+                    <div v-if="client.clientSecret1Set">
+                      <button type="button" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    <div v-else>
+                      <button type="button" class="btn btn-success" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Client Secret 1</td>
+                  <td>Client Secret 2</td>
                   <td>{{ client.clientSecret2Set }}</td>
-                  <td></td>
+                  <td>
+                    <div v-if="client.clientSecret2Set">
+                      <button type="button" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                    <div v-else>
+                      <button type="button" class="btn btn-success" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal">
+                        <i class="bi bi-plus"></i>
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -72,9 +95,14 @@
                   <!--<td>{{ authorization.id }}</td>-->
                   <td>{{ authorization.audience.clientId }}</td>
                   <td class="text-end">
-                    <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
-                      <i class="bi bi-arrow-right"></i>
-                    </router-link>
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                      <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
+                        <i class="bi bi-arrow-right"></i>
+                      </router-link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -99,12 +127,17 @@
               <tbody>
                 <!-- Loop through authorizationsAsAudience and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
-                  <!-- <td>{{ authorization.id }}</td>-->
+                  <!--<td>{{ authorization.id }}</td>-->
                   <td>{{ authorization.subject.clientId }}</td>
                   <td class="text-end">
-                    <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
-                      <i class="bi bi-arrow-right"></i>
-                    </router-link>
+                    <div class="btn-group" role="group">
+                      <button type="button" class="btn btn-danger">
+                        <i class="bi bi-trash"></i>
+                      </button>
+                      <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
+                        <i class="bi bi-arrow-right"></i>
+                      </router-link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -123,11 +156,13 @@
   import { gql } from '@apollo/client/core';
   import client from '../apollo-client';
   import ClientDeleteModal from './ClientDeleteModal.vue';
+  import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
   
   export default {
     name: 'ClientDetailsPage',
     components: {
         ClientDeleteModal,
+        ClientCreateSecretModal,
     },
     data() {
       return {
@@ -138,7 +173,7 @@
     },
     mounted() {
       const clientId = this.$route.params.clientId; // Get the clientId from the route
-      this.loadClient(clientId);
+      this.loadClient(clientId, false);
     },
     watch: {
       // Watch for changes in the route parameters (clientId)
@@ -149,7 +184,17 @@
         client.resetStore(); // We made a change so reset the local cache
         this.$router.push('/'); // Navigate back to home
       },
-      async loadClient(clientId) {
+      openSecretModal(secretType) {
+        // Assuming the child component has a method named 'generateSecret'
+        if (this.$refs.secretModal) {
+          this.$refs.secretModal.generateSecret(secretType);
+        }
+      },
+      refreshClient() {
+        console.log("Refreshing client");
+        this.loadClient(this.client.clientId, true);
+      },
+      async loadClient(clientId, refresh) {
         const GET_CLIENT = gql`
           query Client($clientId: ID!) { 
             client(clientId: $clientId) {
@@ -174,7 +219,11 @@
         `;
   
         try {
-          const { data } = await client.query({ query: GET_CLIENT, variables: { clientId } });
+          const { data } = await client.query({ 
+            query: GET_CLIENT, 
+            variables: { clientId },
+            fetchPolicy: refresh ? 'network-only' : 'cache-first',
+          });
           if (data.client != null) {
             this.client = data.client;
           } else {
