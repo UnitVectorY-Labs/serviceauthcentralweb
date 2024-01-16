@@ -15,7 +15,7 @@
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         
         <div class="row">
-          <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-6 col-sm-12">
             <h3>Client</h3>
             <table class="table table-striped table-hover">
               <thead class="table-dark">
@@ -85,7 +85,48 @@
 
           </div>
 
-          <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-6 col-sm-12">
+            <h3>Client Authorizations</h3>
+            <div v-for="bearer in client.jwtBearer" :key="bearer.id">
+              <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">
+                          <div class="d-flex justify-content-between align-items-end">
+                            <div>Value</div>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientJwtBearerModel" title="Delete Client JWT Bearer">
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JWKS URL</td>
+                        <td>{{ bearer.jwksUrl }}</td>
+                    </tr>
+                    <tr>
+                        <td>Issuer</td>
+                        <td>{{ bearer.iss }}</td>
+                    </tr>
+                    <tr>
+                        <td>Audience</td>
+                        <td>{{ bearer.aud }}</td>
+                    </tr>
+                    <tr>
+                        <td>Subject</td>
+                        <td>{{ bearer.sub }}</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for subjects if client is not null -->
             <h3>Authorized as Subject</h3>
             <table class="table table-striped table-hover">
@@ -122,7 +163,7 @@
             </table>
           </div>
 
-          <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
             <table class="table table-striped table-hover">
@@ -246,6 +287,13 @@
                 subject {
                   clientId
                 }
+              }
+              jwtBearer {
+                  id
+                  jwksUrl
+                  iss
+                  sub
+                  aud
               }
             }
           }
