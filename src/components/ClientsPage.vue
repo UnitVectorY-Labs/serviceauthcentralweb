@@ -1,10 +1,10 @@
 <template>
     <div class="container mt-4">
         <h2>Clients</h2>
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <th scope="col">ClientId</th>
+                    <th scope="col">Client Id</th>
                     <th scope="col">Description</th>
                     <th scope="col" class="text-end">
                       <router-link :to="'/client'" class="btn btn-success">

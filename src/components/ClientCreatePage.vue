@@ -4,7 +4,7 @@
       <!-- Form for submitting -->
       <form @submit.prevent="submitForm" class="offset-sm-2">
         <div class="row mb-3">
-          <label for="clientId" class="col-sm-2 col-form-label text-end">Client ID</label>
+          <label for="clientId" class="col-sm-2 col-form-label text-end">Client Id</label>
           <div class="col-sm-6">
             <input type="text" class="form-control" id="clientId" v-model="clientId" :disabled="loading">
           </div>

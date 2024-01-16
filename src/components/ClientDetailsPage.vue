@@ -15,10 +15,10 @@
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         
         <div class="row">
-          <div class="col">
+          <div class="col-lg-4 col-sm-12">
             <h3>Client</h3>
             <table class="table table-striped table-hover">
-              <thead>
+              <thead class="table-dark">
                   <tr>
                       <th scope="col">Field</th>
                       <th scope="col">Value</th>
@@ -31,7 +31,7 @@
               </thead>
               <tbody>
                   <tr>
-                      <td>Client ID</td>
+                      <td>Client Id</td>
                       <td>{{ client.clientId }}</td>
                       <td></td>
                   </tr>
@@ -85,12 +85,12 @@
 
           </div>
 
-          <div class="col">
+          <div class="col-lg-4 col-sm-12">
             <!-- Display authorizations for subjects if client is not null -->
             <h3>Authorized as Subject</h3>
-            <table class="table">
+            <table class="table table-striped table-hover">
               <!-- Table headers here -->
-              <thead>
+              <thead class="table-dark">
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
@@ -122,12 +122,12 @@
             </table>
           </div>
 
-          <div class="col">
+          <div class="col-lg-4 col-sm-12">
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
-            <table class="table">
+            <table class="table table-striped table-hover">
               <!-- Table headers here -->
-              <thead>
+              <thead class="table-dark">
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">

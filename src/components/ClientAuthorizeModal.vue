@@ -10,8 +10,8 @@
                     <div class="modal-body">
                         <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                         <div class="form-group mb-3">
-                            <label for="authorizedSubject">Authorized Subject Client ID</label>
-                            <input type="text" class="form-control" id="authorizedSubject" v-model="authorizedSubject" :disabled="loading" placeholder="Enter Client ID">
+                            <label for="authorizedSubject">Authorized Subject Client Id</label>
+                            <input type="text" class="form-control" id="authorizedSubject" v-model="authorizedSubject" :disabled="loading" placeholder="Enter Client Id">
                         </div>
                     </div>
                     <div class="modal-footer">
