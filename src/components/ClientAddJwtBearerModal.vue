@@ -1,7 +1,7 @@
 <template>
     <div class="modal fade" id="clientAddJwtBearerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientAddJwtBearerModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form @submit.prevent="submitForm" v-show="!authorizedSuccess">
+            <form @submit.prevent="confirmAuthorize" v-show="!authorizedSuccess">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="clientAddJwtBearerModalLabel">Add JWT Bearer</h5>
@@ -9,26 +9,14 @@
                     </div>
                     <div class="modal-body">
                         <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-                        <div class="form-group mb-3">
-                            <label for="jwksUrl">JWKS URL</label>
-                            <input type="text" class="form-control" id="jwksUrl" v-model="jwksUrl" :disabled="loading" placeholder="https://example.com/.well-known/jwks.json">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="iss">Issuer</label>
-                            <input type="text" class="form-control" id="iss" v-model="iss" :disabled="loading" placeholder="Issuer">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="sub">Subject</label>
-                            <input type="text" class="form-control" id="sub" v-model="sub" :disabled="loading" placeholder="Subject">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="aud">Audience</label>
-                            <input type="text" class="form-control" id="aud" v-model="aud" :disabled="loading" placeholder="Audience">
+                        <div class="form-group mb-3" v-for="field in formFields" :key="field.id">
+                            <label :for="field.id">{{ field.label }}</label>
+                            <input type="text" class="form-control" :id="field.id" v-model="field.value" :disabled="loading" :placeholder="field.placeholder">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" :disabled="loading" @click="confirmAuthorize">Authorize</button>
+                        <button type="submit" class="btn btn-success" :disabled="loading">Authorize</button>
                     </div>
                 </div>
             </form>
@@ -54,10 +42,12 @@ export default {
     },
     data() {
         return {
-            jwksUrl: '',
-            iss: '',
-            sub: '',
-            aud: '',
+            formFields: [
+                { id: 'jwksUrl', label: 'JWKS URL', value: '', placeholder: 'https://example.com/.well-known/jwks.json' },
+                { id: 'iss', label: 'Issuer', value: '', placeholder: 'Issuer' },
+                { id: 'sub', label: 'Subject', value: '', placeholder: 'Subject' },
+                { id: 'aud', label: 'Audience', value: '', placeholder: 'Audience' }
+            ],
             loading: false,
             errorMessage: null,
             authorizedSuccess: false
@@ -67,30 +57,20 @@ export default {
         async confirmAuthorize() {
             this.errorMessage = null;
             this.loading = true;
+            const { jwksUrl, iss, sub, aud } = this.formFields.reduce((acc, field) => ({ ...acc, [field.id]: field.value }), {});
 
-            const AUTHORIZE_JWT_BEARER= gql`
+            const AUTHORIZE_JWT_BEARER = gql`
                 mutation AuthorizeJwtBearer($clientId: String!, $jwksUrl: String!, $iss: String!, $sub: String!, $aud: String!) {
-                    authorizeJwtBearer(
-                        clientId: $clientId
-                        jwksUrl: $jwksUrl
-                        iss: $iss
-                        sub: $sub
-                        aud: $aud
-                    ) {
+                    authorizeJwtBearer(clientId: $clientId, jwksUrl: $jwksUrl, iss: $iss, sub: $sub, aud: $aud) {
                         success
                     }
                 }
             `;
+
             try {
                 const response = await client.mutate({ 
                     mutation: AUTHORIZE_JWT_BEARER, 
-                    variables: { 
-                        clientId: this.client.clientId,
-                        jwksUrl: this.jwksUrl,
-                        iss: this.iss,
-                        sub: this.sub,
-                        aud: this.aud,
-                    }
+                    variables: { clientId: this.client.clientId, jwksUrl, iss, sub, aud }
                 });
 
                 if(response.data.authorizeJwtBearer.success) {
@@ -107,10 +87,7 @@ export default {
             }
         },
         resetData() {
-            this.jwksUrl = '';
-            this.iss = '';
-            this.sub = '';
-            this.aud = '';
+            this.formFields.forEach(field => field.value = '');
             this.loading = false;
             this.errorMessage = null;
             this.authorizedSuccess = false;

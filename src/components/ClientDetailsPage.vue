@@ -25,7 +25,7 @@
                       <th scope="col">Field</th>
                       <th scope="col">Value</th>
                       <th scope="col">
-                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModel" title="Delete Client">
+                          <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModel" title="Delete Client">
                               <i class="bi bi-trash"></i>
                           </button>
                       </th>
@@ -51,12 +51,12 @@
                       </td>
                       <td>
                           <div v-if="client.clientSecret1Set">
-                              <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 1">
+                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 1">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
                           <div v-else>
-                              <button type="button" class="btn btn-success" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
+                              <button type="button" class="btn btn-success float-end" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
                                   <i class="bi bi-plus"></i>
                               </button>
                           </div>
@@ -71,12 +71,12 @@
                       </td>
                       <td>
                           <div v-if="client.clientSecret2Set">
-                              <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 2">
+                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 2">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
                           <div v-else>
-                              <button type="button" class="btn btn-success" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
+                              <button type="button" class="btn btn-success float-end" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
                                   <i class="bi bi-plus"></i>
                               </button>
                           </div>
@@ -97,7 +97,7 @@
                         <th scope="col">
                           <div class="d-flex justify-content-between align-items-end">
                             <div>Value</div>
-                            <button type="button" class="btn btn-danger" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModel" title="Delete Client JWT Bearer">
+                            <button type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModel" title="Delete Client JWT Bearer">
                               <i class="bi bi-trash"></i>
                             </button>
                           </div>
@@ -143,7 +143,7 @@
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
                     <!-- Right now not allowing granting access to other resources on a client page, just granting access to other clients. -->
-                    <button type="button" class="btn btn-success invisible" disabled="disabled" >
+                    <button type="button" class="btn btn-success float-end invisible" disabled="disabled" >
                       <i class="bi bi-plus"></i>
                     </button>
                   </th>
@@ -157,7 +157,7 @@
                   <td class="text-end">
                     <div class="btn-group" role="group">
                       <!-- Right now not allowing deauthorize either -->
-                      <button type="button" class="btn btn-danger invisible" disabled="disabled">
+                      <button type="button" class="btn btn-danger float-end invisible" disabled="disabled">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
@@ -180,7 +180,7 @@
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
-                    <button type="button" class="btn btn-success" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
+                    <button type="button" class="btn btn-success float-end" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
                       <i class="bi bi-plus"></i>
                     </button>
                   </th>
@@ -193,7 +193,7 @@
                   <td>{{ authorization.subject.clientId }}</td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-danger"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModel">
+                      <button type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModel">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
