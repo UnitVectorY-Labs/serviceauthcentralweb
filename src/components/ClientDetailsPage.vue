@@ -51,7 +51,7 @@
                       </td>
                       <td>
                           <div v-if="client.clientSecret1Set">
-                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 1">
+                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 1">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
@@ -71,7 +71,7 @@
                       </td>
                       <td>
                           <div v-if="client.clientSecret2Set">
-                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 2">
+                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 2">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
