@@ -1,29 +1,37 @@
 <template>
-    <div class="modal fade" id="clientCreateSecretModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientCreateSecretModalLabel" aria-hidden="true">
+  <div class="modal fade" id="clientCreateSecretModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientCreateSecretModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="clientCreateSecretModalLabel">New Client Secret</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="clientCreateSecretModalLabel">New Client Secret</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  <div v-if="loading">
+                      <LoadingComponent />
+                  </div>
+                  <div v-else-if="errorMessage" class="alert alert-danger">
+                      {{ errorMessage }}
+                  </div>
+                  <div v-else class="input-group mb-3">
+                      <div class="alert alert-danger" role="alert">
+                          <h4 class="alert-heading">Important: One-Time Access!</h4>
+                          <p>This is the only time you will be able to view or copy your client secret. Make sure to copy and securely store it now. If you lose this secret, there is no way to retrieve it again!</p>
+                      </div>
+                      <input type="text" class="form-control" readonly :value="clientSecret">
+                      <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="copyToClipboard">
+                          <i class="bi-clipboard"></i> Copy
+                      </button>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
           </div>
-          <div class="modal-body">
-            <div v-if="loading">
-                <LoadingComponent/>
-            </div>
-            <div v-else-if="errorMessage" class="alert alert-danger">
-            {{ errorMessage }}
-            </div>
-            <div v-else class="alert alert-success" role="alert">
-              Your new secret is here! {{ clientSecret }}
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
       </div>
-    </div>
-  </template>
+  </div>
+</template>
+
   
   <script>
   import { gql } from '@apollo/client/core';
@@ -41,6 +49,19 @@
       };
     },
     methods: {
+      copyToClipboard() {
+        if (this.clientSecret) {
+            navigator.clipboard.writeText(this.clientSecret)
+                .then(() => {
+                    // Optional: Display a success message or toast
+                    console.log('Secret copied to clipboard!');
+                })
+                .catch(err => {
+                    // Optional: Display an error message or toast
+                    console.error('Failed to copy: ', err);
+                });
+        }
+      },
       async generateSecret(secretType) {
         this.clientSecret = null;
         this.errorMessage = null;

@@ -17,64 +17,72 @@
         <div class="row">
           <div class="col">
             <h3>Client</h3>
-            <table class="table">
-              <!-- Table headers here -->
+            <table class="table table-striped table-hover">
               <thead>
-                <tr>
-                  <th scope="col">Field</th>
-                  <th scope="col">Value</th>
-                  <th scope="col">
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModel">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </th>
-                </tr>
+                  <tr>
+                      <th scope="col">Field</th>
+                      <th scope="col">Value</th>
+                      <th scope="col">
+                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientModel" title="Delete Client">
+                              <i class="bi bi-trash"></i>
+                          </button>
+                      </th>
+                  </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Client ID</td>
-                  <td>{{ client.clientId }}</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Description</td>
-                  <td>{{ client.description }}</td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>Client Secret 1</td>
-                  <td>{{ client.clientSecret1Set }}</td>
-                  <td>
-                    <div v-if="client.clientSecret1Set">
-                      <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div v-else>
-                      <button type="button" class="btn btn-success" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal">
-                        <i class="bi bi-plus"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Client Secret 2</td>
-                  <td>{{ client.clientSecret2Set }}</td>
-                  <td>
-                    <div v-if="client.clientSecret2Set">
-                      <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </div>
-                    <div v-else>
-                      <button type="button" class="btn btn-success" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal">
-                        <i class="bi bi-plus"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                  <tr>
+                      <td>Client ID</td>
+                      <td>{{ client.clientId }}</td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>Description</td>
+                      <td>{{ client.description }}</td>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <td>Client Secret 1</td>
+                      <td>
+                        <span :class="{'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
+                              {{ client.clientSecret1Set ? 'Set' : 'Not Set' }}
+                          </span>
+                      </td>
+                      <td>
+                          <div v-if="client.clientSecret1Set">
+                              <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 1">
+                                  <i class="bi bi-trash"></i>
+                              </button>
+                          </div>
+                          <div v-else>
+                              <button type="button" class="btn btn-success" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
+                                  <i class="bi bi-plus"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>Client Secret 2</td>
+                      <td>
+                        <span :class="{'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
+                              {{ client.clientSecret2Set ? 'Set' : 'Not Set' }}
+                          </span>
+                      </td>
+                      <td>
+                          <div v-if="client.clientSecret2Set">
+                              <button type="button" class="btn btn-danger" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModel" title="Delete Secret 2">
+                                  <i class="bi bi-trash"></i>
+                              </button>
+                          </div>
+                          <div v-else>
+                              <button type="button" class="btn btn-success" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
+                                  <i class="bi bi-plus"></i>
+                              </button>
+                          </div>
+                      </td>
+                  </tr>
               </tbody>
-            </table>
+          </table>
+
           </div>
 
           <div class="col">
