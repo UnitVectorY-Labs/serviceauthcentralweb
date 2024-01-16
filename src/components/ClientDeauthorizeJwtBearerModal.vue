@@ -1,9 +1,9 @@
 <template>
-  <div class="modal fade" id="clientDeauthorizeJwtBearerModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientDeauthorizeJwtBearerModelLabel" aria-hidden="true">
+  <div class="modal fade" id="clientDeauthorizeJwtBearerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientDeauthorizeJwtBearerModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="clientDeauthorizeJwtBearerModelLabel">Deauthorize Client JWT Bearer Confirmation</h1>
+          <h1 class="modal-title fs-5" id="clientDeauthorizeJwtBearerModalLabel">Deauthorize Client JWT Bearer Confirmation</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

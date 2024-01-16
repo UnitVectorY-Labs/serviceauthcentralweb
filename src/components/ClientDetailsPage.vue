@@ -14,7 +14,7 @@
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAddJwtBearerModal ref="addJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        <ClientDeauthorizeJwtBearerModel ref="deauthorizeJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        <clientDeauthorizeJwtBearerModal ref="deauthorizeJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
 
         <div class="row">
           <div class="col-lg-6 col-sm-12">
@@ -97,7 +97,7 @@
                         <th scope="col">
                           <div class="d-flex justify-content-between align-items-end">
                             <div>Value</div>
-                            <button type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModel" title="Delete Client JWT Bearer">
+                            <button type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModal" title="Delete Client JWT Bearer">
                               <i class="bi bi-trash"></i>
                             </button>
                           </div>
@@ -193,7 +193,7 @@
                   <td>{{ authorization.subject.clientId }}</td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModel">
+                      <button type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
@@ -223,7 +223,7 @@ import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
 import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
 import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
 import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
-import ClientDeauthorizeJwtBearerModel from './ClientDeauthorizeJwtBearerModal.vue';
+import clientDeauthorizeJwtBearerModal from './ClientDeauthorizeJwtBearerModal.vue';
 
 const GET_CLIENT = gql`
   query Client($clientId: ID!) { 
@@ -264,7 +264,7 @@ export default {
       ClientAuthorizeModal,
       ClientDeauthorizeModal,
       ClientAddJwtBearerModal,
-      ClientDeauthorizeJwtBearerModel,
+      clientDeauthorizeJwtBearerModal,
   },
   data() {
     return {
