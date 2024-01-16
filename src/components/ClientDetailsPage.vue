@@ -25,7 +25,7 @@
                       <th scope="col">Field</th>
                       <th scope="col">Value</th>
                       <th scope="col">
-                          <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModel" title="Delete Client">
+                          <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModal" title="Delete Client">
                               <i class="bi bi-trash"></i>
                           </button>
                       </th>
