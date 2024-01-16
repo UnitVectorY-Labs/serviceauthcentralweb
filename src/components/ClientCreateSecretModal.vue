@@ -32,85 +32,85 @@
   </div>
 </template>
 
-  
-  <script>
-  import { gql } from '@apollo/client/core';
-  import client from '../apollo-client';
-  
-  export default {
-    props: {
-      client: Object,
-    },
-    data() {
-      return {
-        loading: true,
-        clientSecret: null,
-        errorMessage: null,
-      };
-    },
-    methods: {
-      copyToClipboard() {
-        if (this.clientSecret) {
-            navigator.clipboard.writeText(this.clientSecret)
-                .then(() => {
-                    // Optional: Display a success message or toast
-                    console.log('Secret copied to clipboard!');
-                })
-                .catch(err => {
-                    // Optional: Display an error message or toast
-                    console.error('Failed to copy: ', err);
-                });
-        }
-      },
-      async generateSecret(secretType) {
-        this.clientSecret = null;
-        this.errorMessage = null;
 
-        const GENERATE_CLIENT_SECRET_1 = gql`
-            mutation GenerateClientSecret1($clientId: String!) {
-                generateClientSecret1(clientId: $clientId) {
-                    clientSecret
-                }
-            }
-        `;
-        const GENERATE_CLIENT_SECRET_2 = gql`
-            mutation GenerateClientSecret2($clientId: String!) {
-                generateClientSecret2(clientId: $clientId) {
-                    clientSecret
-                }
-            }
-        `;
-        let mutation;
-        if (secretType === 'secret1') {
-        mutation = GENERATE_CLIENT_SECRET_1;
-        } else if (secretType === 'secret2') {
-            mutation = GENERATE_CLIENT_SECRET_2; // You need to define this mutation
-        } else {
-            this.errorMessage = "Unknown secret type specified";
-            return;
+<script>
+import { gql } from '@apollo/client/core';
+import client from '../apollo-client';
+
+const GENERATE_CLIENT_SECRET_1 = gql`
+    mutation GenerateClientSecret1($clientId: String!) {
+        generateClientSecret1(clientId: $clientId) {
+            clientSecret
         }
-        try {
-            const response = await client.mutate({ 
-                mutation: mutation, 
-                variables: { clientId: this.client.clientId }
-            });
-            if (secretType === 'secret1') {
-                this.clientSecret = response.data.generateClientSecret1.clientSecret; // Adapt based on actual response structure
-            } else if (secretType === 'secret2') {
-                this.clientSecret = response.data.generateClientSecret2.clientSecret;
-            }
-            // After successful generation
-            this.$emit('refreshClient', {});
-        } catch (error) {
-            console.error("Error creating client secret:", error);
-            this.errorMessage = error.message; // Set error message
-        } finally {
-            this.loading = false;
-        }
-      },
-      async generate() {
-      }
     }
-  };
-  </script>
-  
+`;
+const GENERATE_CLIENT_SECRET_2 = gql`
+    mutation GenerateClientSecret2($clientId: String!) {
+        generateClientSecret2(clientId: $clientId) {
+            clientSecret
+        }
+    }
+`;
+
+export default {
+props: {
+    client: Object,
+},
+data() {
+    return {
+    loading: true,
+    clientSecret: null,
+    errorMessage: null,
+    };
+},
+methods: {
+    copyToClipboard() {
+    if (this.clientSecret) {
+        navigator.clipboard.writeText(this.clientSecret)
+            .then(() => {
+                // Optional: Display a success message or toast
+                console.log('Secret copied to clipboard!');
+            })
+            .catch(err => {
+                // Optional: Display an error message or toast
+                console.error('Failed to copy: ', err);
+            });
+    }
+    },
+    async generateSecret(secretType) {
+    this.clientSecret = null;
+    this.errorMessage = null;
+
+    let mutation;
+    if (secretType === 'secret1') {
+    mutation = GENERATE_CLIENT_SECRET_1;
+    } else if (secretType === 'secret2') {
+        mutation = GENERATE_CLIENT_SECRET_2; // You need to define this mutation
+    } else {
+        this.errorMessage = "Unknown secret type specified";
+        return;
+    }
+    try {
+        const response = await client.mutate({ 
+            mutation: mutation, 
+            variables: { clientId: this.client.clientId }
+        });
+        if (secretType === 'secret1') {
+            this.clientSecret = response.data.generateClientSecret1.clientSecret; // Adapt based on actual response structure
+        } else if (secretType === 'secret2') {
+            this.clientSecret = response.data.generateClientSecret2.clientSecret;
+        }
+        // After successful generation
+        this.$emit('refreshClient', {});
+    } catch (error) {
+        console.error("Error creating client secret:", error);
+        this.errorMessage = error.message; // Set error message
+    } finally {
+        this.loading = false;
+    }
+    },
+    async generate() {
+    }
+}
+};
+</script>

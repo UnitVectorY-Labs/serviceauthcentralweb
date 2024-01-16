@@ -20,35 +20,36 @@
     </div>
   </template>
   
-  <script>
-  import { gql } from '@apollo/client/core';
-  import client from '../apollo-client';
-  
-  export default {
-    props: {
-      client: Object
-    },
-    methods: {
-      async confirmDelete() {
-        const DELETE_CLIENT = gql`
-            mutation DeleteClient($clientId: String!) {
-                deleteClient(clientId: $clientId) {
-                    success
-                }
-            }
-        `;
-        try {
-            await client.mutate({ 
-                mutation: DELETE_CLIENT, 
-                variables: { clientId: this.client.clientId }
-            });
-            this.$emit('deleted'); // Notify parent component
-        } catch (error) {
-            console.error("Error deleting client:", error);
-            this.$emit('error', error); // Notify parent component of error
+<script>
+import { gql } from '@apollo/client/core';
+import client from '../apollo-client';
+
+const DELETE_CLIENT = gql`
+    mutation DeleteClient($clientId: String!) {
+        deleteClient(clientId: $clientId) {
+            success
         }
+    }
+`;
+
+export default {
+  props: {
+    client: Object
+  },
+  methods: {
+    async confirmDelete() {
+      try {
+          await client.mutate({ 
+              mutation: DELETE_CLIENT, 
+              variables: { clientId: this.client.clientId }
+          });
+          this.$emit('deleted'); // Notify parent component
+      } catch (error) {
+          console.error("Error deleting client:", error);
+          this.$emit('error', error); // Notify parent component of error
       }
     }
-  };
-  </script>
+  }
+};
+</script>
   

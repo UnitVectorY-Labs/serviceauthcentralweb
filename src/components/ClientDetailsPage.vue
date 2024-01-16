@@ -215,129 +215,129 @@
   
   
 <script>
-  import { gql } from '@apollo/client/core';
-  import client from '../apollo-client';
-  import ClientDeleteModal from './ClientDeleteModal.vue';
-  import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
-  import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
-  import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
-  import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
-  import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
-  import ClientDeauthorizeJwtBearerModel from './ClientDeauthorizeJwtBearerModal.vue';
-  
-  export default {
-    name: 'ClientDetailsPage',
-    components: {
-        ClientDeleteModal,
-        ClientCreateSecretModal,
-        ClientDeleteSecretModal,
-        ClientAuthorizeModal,
-        ClientDeauthorizeModal,
-        ClientAddJwtBearerModal,
-        ClientDeauthorizeJwtBearerModel,
+import { gql } from '@apollo/client/core';
+import client from '../apollo-client';
+import ClientDeleteModal from './ClientDeleteModal.vue';
+import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
+import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
+import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
+import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
+import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
+import ClientDeauthorizeJwtBearerModel from './ClientDeauthorizeJwtBearerModal.vue';
+
+const GET_CLIENT = gql`
+  query Client($clientId: ID!) { 
+    client(clientId: $clientId) {
+      clientId
+      description
+      clientSecret1Set
+      clientSecret2Set
+      authorizationsAsSubject {
+        id
+        audience {
+          clientId
+        }
+      }
+      authorizationsAsAudience {
+        id
+        subject {
+          clientId
+        }
+      }
+      jwtBearer {
+          id
+          jwksUrl
+          iss
+          sub
+          aud
+      }
+    }
+  }
+`;
+
+export default {
+  name: 'ClientDetailsPage',
+  components: {
+      ClientDeleteModal,
+      ClientCreateSecretModal,
+      ClientDeleteSecretModal,
+      ClientAuthorizeModal,
+      ClientDeauthorizeModal,
+      ClientAddJwtBearerModal,
+      ClientDeauthorizeJwtBearerModel,
+  },
+  data() {
+    return {
+      client: null, // Store the specific client
+      notFound: false,
+      serverError: false,
+    };
+  },
+  mounted() {
+    const clientId = this.$route.params.clientId; // Get the clientId from the route
+    this.loadClient(clientId, false);
+  },
+  watch: {
+    // Watch for changes in the route parameters (clientId)
+    '$route.params.clientId': 'loadClient',
+  },
+  methods: {
+    handleDeletion() {
+      client.resetStore(); // We made a change so reset the local cache
+      this.$router.push('/'); // Navigate back to home
     },
-    data() {
-      return {
-        client: null, // Store the specific client
-        notFound: false,
-        serverError: false,
-      };
+    openSecretModal(secretType) {
+      // Assuming the child component has a method named 'generateSecret'
+      if (this.$refs.secretModal) {
+        this.$refs.secretModal.generateSecret(secretType);
+      }
     },
-    mounted() {
-      const clientId = this.$route.params.clientId; // Get the clientId from the route
-      this.loadClient(clientId, false);
+    openDeleteSecretModal(secretType) {
+      if (this.$refs.deleteSecretModal) {
+        this.$refs.deleteSecretModal.setSecretType(secretType);
+      }
     },
-    watch: {
-      // Watch for changes in the route parameters (clientId)
-      '$route.params.clientId': 'loadClient',
+    openDeauthorizeModal(subject) {
+      if (this.$refs.deauthorizeModal) {
+        this.$refs.deauthorizeModal.setDeauthorizedSubject(subject);
+      }
     },
-    methods: {
-      handleDeletion() {
-        client.resetStore(); // We made a change so reset the local cache
-        this.$router.push('/'); // Navigate back to home
-      },
-      openSecretModal(secretType) {
-        // Assuming the child component has a method named 'generateSecret'
-        if (this.$refs.secretModal) {
-          this.$refs.secretModal.generateSecret(secretType);
-        }
-      },
-      openDeleteSecretModal(secretType) {
-        if (this.$refs.deleteSecretModal) {
-          this.$refs.deleteSecretModal.setSecretType(secretType);
-        }
-      },
-      openDeauthorizeModal(subject) {
-        if (this.$refs.deauthorizeModal) {
-          this.$refs.deauthorizeModal.setDeauthorizedSubject(subject);
-        }
-      },
-      openAddJwtBearerModal() {
-        if(this.$refs.addJwtBearerModal){
-          this.$refs.addJwtBearerModal.resetData();
-        }
-      },
-      openDeauthorizeJwtBearerModal(jwtBearer) {
-        if(this.$refs.deauthorizeJwtBearerModal){
-          this.$refs.deauthorizeJwtBearerModal.setJwtBearer(jwtBearer);
-        }
-      },
-      resetAuthorize() {
-        if(this.$refs.authorizeModal){
-          this.$refs.authorizeModal.resetData();
-        }
-      },
-      refreshClient() {
-        this.loadClient(this.client.clientId, true);
-      },
-      async loadClient(clientId, refresh) {
-        const GET_CLIENT = gql`
-          query Client($clientId: ID!) { 
-            client(clientId: $clientId) {
-              clientId
-              description
-              clientSecret1Set
-              clientSecret2Set
-              authorizationsAsSubject {
-                id
-                audience {
-                  clientId
-                }
-              }
-              authorizationsAsAudience {
-                id
-                subject {
-                  clientId
-                }
-              }
-              jwtBearer {
-                  id
-                  jwksUrl
-                  iss
-                  sub
-                  aud
-              }
-            }
-          }
-        `;
-  
-        try {
-          const { data } = await client.query({ 
-            query: GET_CLIENT, 
-            variables: { clientId },
-            fetchPolicy: refresh ? 'network-only' : 'cache-first',
-          });
-          if (data.client != null) {
-            this.client = data.client;
-          } else {
-            this.notFound = true;
-          }
-        } catch (error) {
-          console.error("Error fetching client:", error);
-          this.serverError = true;
-        }
-      },
+    openAddJwtBearerModal() {
+      if(this.$refs.addJwtBearerModal){
+        this.$refs.addJwtBearerModal.resetData();
+      }
     },
-  };
-  </script>
+    openDeauthorizeJwtBearerModal(jwtBearer) {
+      if(this.$refs.deauthorizeJwtBearerModal){
+        this.$refs.deauthorizeJwtBearerModal.setJwtBearer(jwtBearer);
+      }
+    },
+    resetAuthorize() {
+      if(this.$refs.authorizeModal){
+        this.$refs.authorizeModal.resetData();
+      }
+    },
+    refreshClient() {
+      this.loadClient(this.client.clientId, true);
+    },
+    async loadClient(clientId, refresh) {
+      try {
+        const { data } = await client.query({ 
+          query: GET_CLIENT, 
+          variables: { clientId },
+          fetchPolicy: refresh ? 'network-only' : 'cache-first',
+        });
+        if (data.client != null) {
+          this.client = data.client;
+        } else {
+          this.notFound = true;
+        }
+      } catch (error) {
+        console.error("Error fetching client:", error);
+        this.serverError = true;
+      }
+    },
+  },
+};
+</script>
   

@@ -36,6 +36,14 @@
 import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
 
+const AUTHORIZE_JWT_BEARER = gql`
+    mutation AuthorizeJwtBearer($clientId: String!, $jwksUrl: String!, $iss: String!, $sub: String!, $aud: String!) {
+        authorizeJwtBearer(clientId: $clientId, jwksUrl: $jwksUrl, iss: $iss, sub: $sub, aud: $aud) {
+            success
+        }
+    }
+`;
+
 export default {
     props: {
         client: Object
@@ -58,14 +66,6 @@ export default {
             this.errorMessage = null;
             this.loading = true;
             const { jwksUrl, iss, sub, aud } = this.formFields.reduce((acc, field) => ({ ...acc, [field.id]: field.value }), {});
-
-            const AUTHORIZE_JWT_BEARER = gql`
-                mutation AuthorizeJwtBearer($clientId: String!, $jwksUrl: String!, $iss: String!, $sub: String!, $aud: String!) {
-                    authorizeJwtBearer(clientId: $clientId, jwksUrl: $jwksUrl, iss: $iss, sub: $sub, aud: $aud) {
-                        success
-                    }
-                }
-            `;
 
             try {
                 const response = await client.mutate({ 

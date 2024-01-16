@@ -33,6 +33,15 @@
 import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
 
+const GET_CLIENTS = gql`
+  query Clients {
+    clients {
+      clientId
+      description
+    }
+  }
+`;
+
 export default {
   name: 'ClientsPage',
   data() {
@@ -45,14 +54,7 @@ export default {
   },
   methods: {
     async loadClients() {
-      const GET_CLIENTS = gql`
-        query Clients {
-          clients {
-            clientId
-            description
-          }
-        }
-      `;
+
       
       try {
         const { data } = await client.query({ query: GET_CLIENTS });

@@ -36,6 +36,14 @@
 import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
 
+const AUTHORIZE_CLIENT = gql`
+    mutation Authorize($subject: String!, $audience: String!) {
+        authorize(subject: $subject, audience: $audience) {
+            success
+        }
+    }
+`;
+
 export default {
     props: {
         client: Object
@@ -52,14 +60,6 @@ export default {
         async confirmAuthorize() {
             this.errorMessage = null;
             this.loading = true;
-
-            const AUTHORIZE_CLIENT = gql`
-                mutation Authorize($subject: String!, $audience: String!) {
-                    authorize(subject: $subject, audience: $audience) {
-                        success
-                    }
-                }
-            `;
             try {
                 const response = await client.mutate({ 
                     mutation: AUTHORIZE_CLIENT, 
@@ -69,7 +69,7 @@ export default {
                     }
                 });
 
-                if(response.data.authorize.success) {
+                if (response.data.authorize.success) {
                     this.authorizedSuccess = true;
                     this.$emit('refreshClient', {});
                 } else {
@@ -77,6 +77,7 @@ export default {
                 }
             } catch (error) {
                 console.error("Error authorizing client:", error);
+                this.errorMessage = "Error occurred while authorizing client";
                 this.$emit('error', error); // Notify parent component of error
             } finally {
                 this.loading = false;
