@@ -1,0 +1,80 @@
+<template>
+    <div class="modal fade" id="clientDeauthorizeJwtBearerModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="clientDeauthorizeJwtBearerModelLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="clientDeauthorizeJwtBearerModelLabel">Deauthorize Client JWT Bearer Confirmation</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <div v-else class="alert alert-danger" role="alert">
+              Are you sure? Add context here...
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" :disabled="loading" data-bs-dismiss="modal" @click="confirmDelete">Confirm Deauthorize</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import { gql } from '@apollo/client/core';
+  import client from '../apollo-client';
+  
+  export default {
+    props: {
+      client: Object,
+    },
+    data() {
+        return {
+            jwtBearer: null,
+            loading: false,
+            errorMessage: null,
+            deauthorizedSuccess: false
+        };
+    },
+    methods: {
+      setJwtBearer(jwtBearer){
+        this.loading = false;
+        this.errorMessage = null;
+        this.jwtBearer = jwtBearer;
+        this.deauthorizedSuccess = false;
+      },
+      async confirmDelete() {
+        const DEAUTHORIZE_CLIENT_JWT_BEARER = gql`
+                mutation DeauthorizeJwtBearer($clientId: String!, $id: String!) {
+                    deauthorizeJwtBearer(clientId: $clientId, id: $id) {
+                        success
+                    }
+                }
+            `;
+            try {
+                const response = await client.mutate({ 
+                    mutation: DEAUTHORIZE_CLIENT_JWT_BEARER, 
+                    variables: { 
+                        clientId: this.client.clientId,
+                        id: this.jwtBearer.id,
+                    }
+                });
+
+                if(response.data.deauthorizeJwtBearer.success) {
+                    this.deauthorizedSuccess = true;
+                    this.$emit('refreshClient', {});
+                } else {
+                    this.errorMessage = "Failed to authorize client";
+                }
+            } catch (error) {
+                console.error("Error authorizing client:", error);
+                this.$emit('error', error); // Notify parent component of error
+            } finally {
+                this.loading = false;
+            }
+      }
+    }
+  };
+  </script>
+  

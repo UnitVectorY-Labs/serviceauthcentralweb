@@ -13,7 +13,9 @@
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        
+        <ClientAddJwtBearerModal ref="addJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        <ClientDeauthorizeJwtBearerModel ref="deauthorizeJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <h3>Client</h3>
@@ -95,7 +97,7 @@
                         <th scope="col">
                           <div class="d-flex justify-content-between align-items-end">
                             <div>Value</div>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteClientJwtBearerModel" title="Delete Client JWT Bearer">
+                            <button type="button" class="btn btn-danger" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModel" title="Delete Client JWT Bearer">
                               <i class="bi bi-trash"></i>
                             </button>
                           </div>
@@ -122,6 +124,10 @@
                 </tbody>
               </table>
             </div>
+
+            <button type="button" class="btn btn-success float-end" @click="openAddJwtBearerModal()" data-bs-toggle="modal" data-bs-target="#clientAddJwtBearerModal">
+              <i class="bi bi-plus"></i>
+            </button>
           </div>
         </div>
         <div class="row">
@@ -129,7 +135,8 @@
           <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for subjects if client is not null -->
             <h3>Authorized as Subject</h3>
-            <table class="table table-striped table-hover">
+            <span class="text-muted">The following clients are authorized authorized to access "{{ client.clientId }}".</span>
+            <table class="table table-striped table-hover mt-2">
               <!-- Table headers here -->
               <thead class="table-dark">
                 <tr>
@@ -166,7 +173,8 @@
           <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
-            <table class="table table-striped table-hover">
+            <span class="text-muted">The "{{ client.clientId }}" client is authorized to access the following clients.</span>
+            <table class="table table-striped table-hover mt-2">
               <!-- Table headers here -->
               <thead class="table-dark">
                 <tr>
@@ -214,6 +222,8 @@
   import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
   import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
   import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
+  import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
+  import ClientDeauthorizeJwtBearerModel from './ClientDeauthorizeJwtBearerModal.vue';
   
   export default {
     name: 'ClientDetailsPage',
@@ -223,6 +233,8 @@
         ClientDeleteSecretModal,
         ClientAuthorizeModal,
         ClientDeauthorizeModal,
+        ClientAddJwtBearerModal,
+        ClientDeauthorizeJwtBearerModel,
     },
     data() {
       return {
@@ -258,6 +270,16 @@
       openDeauthorizeModal(subject) {
         if (this.$refs.deauthorizeModal) {
           this.$refs.deauthorizeModal.setDeauthorizedSubject(subject);
+        }
+      },
+      openAddJwtBearerModal() {
+        if(this.$refs.addJwtBearerModal){
+          this.$refs.addJwtBearerModal.resetData();
+        }
+      },
+      openDeauthorizeJwtBearerModal(jwtBearer) {
+        if(this.$refs.deauthorizeJwtBearerModal){
+          this.$refs.deauthorizeJwtBearerModal.setJwtBearer(jwtBearer);
         }
       },
       resetAuthorize() {
