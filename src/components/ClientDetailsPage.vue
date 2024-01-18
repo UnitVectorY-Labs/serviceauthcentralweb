@@ -8,7 +8,7 @@
       </div>
       <div v-else-if="client">
 
-        <client-delete-modal v-if="client" :client="client" @deleted="handleDeletion" />
+        <ClientDeleteModal v-if="client" :client="client" @deleted="handleDeletion" />
         <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
@@ -135,7 +135,7 @@
           <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for subjects if client is not null -->
             <h3>Authorized as Subject</h3>
-            <span class="text-muted">The following clients are authorized authorized to access "{{ client.clientId }}".</span>
+            <span class="text-muted">The "<span class="text-primary fw-bold">{{ client.clientId }}</span>" client is authorized to access the following clients.</span>
             <table class="table table-striped table-hover mt-2">
               <!-- Table headers here -->
               <thead class="table-dark">
@@ -173,7 +173,7 @@
           <div class="col-lg-6 col-sm-12">
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
-            <span class="text-muted">The "{{ client.clientId }}" client is authorized to access the following clients.</span>
+            <span class="text-muted">The following clients are authorized authorized to access "<span class="text-primary fw-bold">{{ client.clientId }}</span>".</span>
             <table class="table table-striped table-hover mt-2">
               <!-- Table headers here -->
               <thead class="table-dark">

@@ -10,6 +10,32 @@
           <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
           <div v-else class="alert alert-danger" role="alert">
             Are you sure? Add context here...
+            <table class="table" v-if="jwtBearer">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Field</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>JWKS URL</td>
+                        <td>{{ jwtBearer.jwksUrl }}</td>
+                    </tr>
+                    <tr>
+                        <td>Issuer</td>
+                        <td>{{ jwtBearer.iss }}</td>
+                    </tr>
+                    <tr>
+                        <td>Audience</td>
+                        <td>{{ jwtBearer.aud }}</td>
+                    </tr>
+                    <tr>
+                        <td>Subject</td>
+                        <td>{{ jwtBearer.sub }}</td>
+                    </tr>
+                </tbody>
+              </table>
           </div>
         </div>
         <div class="modal-footer">
