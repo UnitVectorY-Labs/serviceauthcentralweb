@@ -42,7 +42,7 @@
                       <td>{{ client.description }}</td>
                       <td></td>
                   </tr>
-                  <tr>
+                  <tr v-if="client.clientType == 'APPLICATION'">
                       <td>Client Secret 1</td>
                       <td>
                         <span :class="{'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
@@ -62,7 +62,7 @@
                           </div>
                       </td>
                   </tr>
-                  <tr>
+                  <tr v-if="client.clientType == 'APPLICATION'">
                       <td>Client Secret 2</td>
                       <td>
                         <span :class="{'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
@@ -87,7 +87,7 @@
 
           </div>
 
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-6 col-sm-12"  v-if="client.clientType == 'APPLICATION'">
             <h3>Client Authorizations</h3>
             <div v-for="bearer in client.jwtBearer" :key="bearer.id">
               <table class="table table-striped table-hover">
@@ -170,7 +170,7 @@
             </table>
           </div>
 
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-6 col-sm-12" v-if="client.clientType == 'APPLICATION'" >
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
             <span class="text-muted">The following clients are authorized authorized to access "<span class="text-primary fw-bold">{{ client.clientId }}</span>".</span>
@@ -230,6 +230,7 @@ const GET_CLIENT = gql`
     client(clientId: $clientId) {
       clientId
       description
+      clientType
       clientSecret1Set
       clientSecret2Set
       authorizationsAsSubject {
