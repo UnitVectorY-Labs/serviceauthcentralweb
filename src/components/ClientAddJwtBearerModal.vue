@@ -81,6 +81,7 @@ export default {
                 }
             } catch (error) {
                 console.error("Error authorizing client:", error);
+                this.errorMessage = error.message;
                 this.$emit('error', error); // Notify parent component of error
             } finally {
                 this.loading = false;
