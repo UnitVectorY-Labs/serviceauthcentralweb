@@ -1,19 +1,26 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
+import { setContext } from '@apollo/client/link/context';
+import store from '@/store'; // Import the Vuex store
 
-// HTTP connection to the API
 const httpLink = createHttpLink({
-  // TODO: Change to real URL, leaving this now for development
-  uri: 'http://localhost:8081/graphql',
-})
+  uri: process.env.VUE_APP_SAC_MANAGE_URI,
+});
 
-// Cache implementation
-const cache = new InMemoryCache()
+const authLink = setContext((_, { headers }) => {
+  // Retrieve the token from Vuex store
+  const token = store.state.token; // Make sure this path matches your store's state structure
 
-// Create the apollo client
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  }
+});
+
 const client = new ApolloClient({
-  link: httpLink,
-  cache,
-})
-
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 export default client;

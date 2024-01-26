@@ -1,7 +1,10 @@
 <template>
   <div class="container mt-4">
       <h2>Clients</h2>
-      <div v-if="loading">
+      <div v-if="serverError">
+        <Error500Component/>
+      </div>
+      <div v-else-if="loading">
         <LoadingComponent />
       </div>
       <div v-else>
@@ -82,7 +85,8 @@ export default {
           endCursor: null,
         },
       },
-      loading: true
+      loading: true,
+      serverError: false,
     };
   },
   mounted() {
@@ -91,6 +95,7 @@ export default {
   },
   methods: {
     async loadClients({ first, after, last, before }) {
+      this.serverError = false;
       try {
         const { data } = await client.query({
           query: GET_CLIENTS,
@@ -99,6 +104,7 @@ export default {
         this.clients = data.clients;
       } catch (error) {
         console.error("Error fetching clients:", error);
+        this.serverError = true;
       }
     },
     loadNext() {
