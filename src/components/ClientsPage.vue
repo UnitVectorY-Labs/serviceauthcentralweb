@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-4">
-      <h2>Clients</h2>
       <div v-if="serverError">
         <Error500Component/>
       </div>
@@ -8,6 +7,7 @@
         <LoadingComponent />
       </div>
       <div v-else>
+        <h2>Clients</h2>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
@@ -25,7 +25,7 @@
                     <th scope="row">{{ edge.node.clientId }}</th>
                     <td>{{ edge.node.description }}</td>
                     <td class="text-end">
-                      <router-link :to="'/clients/' + edge.node.clientId" class="btn btn-primary">
+                      <router-link :to="'/clients/' + encodeURIComponent(edge.node.clientId)" class="btn btn-primary">
                         <i class="bi bi-arrow-right"></i>
                       </router-link>
                     </td>
@@ -91,7 +91,6 @@ export default {
   },
   mounted() {
     this.loadClients({ first: PERPAGE });
-    this.loading = false;
   },
   methods: {
     async loadClients({ first, after, last, before }) {
@@ -102,6 +101,7 @@ export default {
           variables: { first, after, last, before },
         });
         this.clients = data.clients;
+        this.loading = false;
       } catch (error) {
         console.error("Error fetching clients:", error);
         this.serverError = true;
