@@ -17,7 +17,8 @@ export const authorize = () => {
 export const exchangeToken = async () => {
   const url = window.location.href;
   try {
-    const resp = await pkce.exchangeForAccessToken(url);
+    const additionalParams = { audience: process.env.VUE_APP_SAC_ISSUER };
+    const resp = await pkce.exchangeForAccessToken(url, additionalParams);
     const token = resp.access_token;
     // Save the token for vuex
     store.dispatch('signIn', token);
