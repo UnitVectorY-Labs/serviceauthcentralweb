@@ -10,7 +10,13 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'HomePage',
+  computed: {
+    ...mapGetters(['isTokenSet']),
+  },
 }
 </script>

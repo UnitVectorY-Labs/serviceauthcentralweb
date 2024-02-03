@@ -7,7 +7,7 @@
         <LoadingComponent />
       </div>
       <div v-else>
-        <h2>Clients</h2>
+        <h3>Clients</h3>
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>

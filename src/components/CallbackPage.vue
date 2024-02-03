@@ -1,6 +1,6 @@
 <template>
     <div>
-      Processing login...
+      <LoadingComponent/>
     </div>
   </template>
   

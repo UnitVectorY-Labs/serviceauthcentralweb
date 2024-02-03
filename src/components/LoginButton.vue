@@ -1,7 +1,7 @@
 <template>
   <div>
-    <button v-if="!isTokenSet" @click="signIn" class="btn btn-primary">Sign In</button>
-    <button v-else @click="performSignOut" class="btn btn-secondary">Sign Out</button>
+    <button v-if="!isTokenSet" @click="signIn" class="btn btn-primary btn-sm">Sign In</button>
+    <button v-else @click="performSignOut" class="btn btn-secondary btn-sm">Sign Out</button>
   </div>
 </template>
 
