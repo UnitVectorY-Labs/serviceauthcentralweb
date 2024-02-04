@@ -34,7 +34,7 @@
               <tbody>
                   <tr>
                       <td>Client Id</td>
-                      <td>{{ client.clientId }}</td>
+                      <td><p class="text-break">{{ client.clientId }}</p></td>
                       <td></td>
                   </tr>
                   <tr>
