@@ -39,7 +39,7 @@
                   </tr>
                   <tr>
                       <td>Description</td>
-                      <td>{{ client.description }}</td>
+                      <td><p class="text-break">{{ client.description }}</p></td>
                       <td></td>
                   </tr>
                   <tr v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
@@ -156,7 +156,7 @@
                 <!-- Loop through authorizationsAsSubject and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsSubject" :key="authorization.id">
                   <!--<td>{{ authorization.id }}</td>-->
-                  <td>{{ authorization.audience.clientId }}</td>
+                  <td><p class="text-break">{{ authorization.audience.clientId }}</p></td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
                       <!-- Right now not allowing deauthorize either -->
@@ -195,7 +195,7 @@
               <tbody>
                 <!-- Loop through authorizationsAsAudience and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
-                  <td>{{ authorization.subject.clientId }}</td>
+                  <td><p class="text-break">{{ authorization.subject.clientId }}</p></td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
                       <button v-if="client.managementPermissions.canDeleteAuthorization" type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
