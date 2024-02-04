@@ -160,7 +160,7 @@
                       <button type="button" class="btn btn-danger float-end invisible" disabled="disabled">
                         <i class="bi bi-trash"></i>
                       </button>
-                      <router-link :to="'/clients/' + authorization.audience.clientId" class="btn btn-primary">
+                      <router-link :to="'/clients/' + encodeURIComponent(authorization.audience.clientId)" class="btn btn-primary">
                         <i class="bi bi-arrow-right"></i>
                       </router-link>
                     </div>
@@ -196,7 +196,7 @@
                       <button type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
                         <i class="bi bi-trash"></i>
                       </button>
-                      <router-link :to="'/clients/' + authorization.subject.clientId" class="btn btn-primary">
+                      <router-link :to="'/clients/' + encodeURIComponent(authorization.subject.clientId)" class="btn btn-primary">
                         <i class="bi bi-arrow-right"></i>
                       </router-link>
                     </div>

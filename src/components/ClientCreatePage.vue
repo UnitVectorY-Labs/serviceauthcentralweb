@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4">
-    <h2>Create New Client</h2>
+    <h3>Create New Client</h3>
     <form @submit.prevent="submitForm" class="offset-sm-2">
       <div class="row mb-3">
         <label for="clientId" class="col-sm-2 col-form-label text-end">Client Id</label>
