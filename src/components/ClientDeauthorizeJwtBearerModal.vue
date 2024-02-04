@@ -9,8 +9,9 @@
         <div class="modal-body">
           <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
           <div v-else class="alert alert-danger" role="alert">
-            Are you sure? Add context here...
-            <table class="table" v-if="jwtBearer">
+            Are you sure you want to deauthorize the following JWT Bearer? Doing so will result in the client "<span class="text-primary fw-bold">{{ client.clientId }}</span>" being unable to authenticate with this JWT Bearer.
+          </div>
+          <table class="table" v-if="jwtBearer">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">Field</th>
@@ -36,7 +37,6 @@
                     </tr>
                 </tbody>
               </table>
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

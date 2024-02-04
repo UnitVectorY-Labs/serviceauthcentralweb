@@ -2,12 +2,12 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
-                <h2>Welcome to ServiceAuthCentral <a class="btn btn-light" data-bs-toggle="offcanvas" href="#whatIsServiceAuthCentral" role="button" aria-controls="whatIsServiceAuthCentral"><i class="bi bi-info-circle-fill"></i></a></h2>
+                <h2>Welcome to ServiceAuthCentral <a class="btn btn-light" data-bs-toggle="offcanvas" href="#whatIsServiceAuthCentral" role="button" aria-controls="whatIsServiceAuthCentral"><i class="bi bi-info-circle-fill custom-icon"></i></a></h2>
                 <div class="accordion accordion-flush" id="accordionHomeInfo">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jsonWebKeySets" aria-expanded="false" aria-controls="jsonWebKeySets">
-                        JSON Web Key Sets
+                        <i class="bi bi-key-fill custom-icon"></i> JSON Web Key Sets
                       </button>
                     </h2>
                     <div id="jsonWebKeySets" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionHomeInfo">
@@ -26,7 +26,7 @@
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingTwo">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#headingMicroserviceAuth" aria-expanded="false" aria-controls="headingMicroserviceAuth">
-                        Microservice Authentication
+                        <i class="bi bi-shield-lock-fill custom-icon"></i> Microservice Authentication & Authorization
                       </button>
                     </h2>
                     <div id="headingMicroserviceAuth" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionHomeInfo">
@@ -45,7 +45,7 @@
                   <div class="accordion-item" v-if="isTokenSet">
                     <h2 class="accordion-header" id="headingThree">
                       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#tokenExchange" aria-expanded="false" aria-controls="tokenExchange">
-                        Token Exchange
+                        <i class="bi bi-gear-fill custom-icon"></i> Token Exchange
                       </button>
                     </h2>
                     <div id="tokenExchange" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionHomeInfo">
@@ -114,18 +114,26 @@
       </div>
       <div class="offcanvas-body">
         <div>
-          <p>ServiceAuthCentral is a powerful tool designed to streamline authorization for microservices. Here's what makes it stand out:</p>
+          <p>ServiceAuthCentral is a tool designed to streamline authorization for microservices. Here's what makes it stand out:</p>
           <ul>
-            <li><strong>Open Source:</strong> Freely available <a href="https://github.com/UnitVectorY-Labs/ServiceAuthCentral"><i class="bi bi-github"></i></a> consisting of a centralized authorization server, management server, and web based management frontend you can easily host yourself.</li>
+            <li><strong>Open Source:</strong> Freely available <a href="https://github.com/UnitVectorY-Labs/ServiceAuthCentral"><i class="bi bi-github"></i></a> consisting of a centralized authorization server, management server, and web based management frontend.</li>
             <li><strong>Server-to-Server Authentication:</strong> Targets solving server-to-server authentication for microservices using the client credentials OAuth 2.0 flow.</li>
-            <li><strong>Advanced Security:</strong> Advocates for the <span class="text-secondary fw-bold">urn:ietf:params:oauth:grant-type:jwt-bearer</span> flow to reduce reliance on shared secrets.</li>
-            <li><strong>Elimination of Shared Secrets:</strong> Cloud based clients can utilize usings JWTs such as GCP Service accounts to authenticate thereby eliminating the need for shared secrets.</li>
+            <li><strong>Opinionated Centralized Authorization:</strong> Provides centralized capability for manage authorizations for microservices accessing eachother simplifying the process of authorization.</li>
+            <li><strong>Elimination of Shared Secrets:</strong> Advocates for the <code>urn:ietf:params:oauth:grant-type:jwt-bearer</code> flow to reduce reliance on shared secrets. Utilizing cloud based solutions such as GCP service accounts can eliminate the need for shared secrets.</li>
             <li><strong>Modular Cloud-Native Backend:</strong> Utilizes a module backend to support cloud native technologies for data persistence and utilizes cloud services such as KMS for JWT signing eliminating direct access to power secrets.</li>
           </ul>
         </div>
       </div>
     </div>
 </template>
+
+<style>
+.custom-icon {
+  font-size: 1.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+</style>
 
 <script>
 

@@ -8,6 +8,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-info" role="alert">
+                            Enter the client ID of the application to grant access to call "<span class="text-primary fw-bold">{{ client.clientId }}</span>". This authorizes the following client to specify "<span class="text-primary fw-bold">{{ client.clientId }}</span>" as an audience in the access token.
+                        </div>
                         <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                         <div class="form-group mb-3">
                             <label for="authorizedSubject">Authorized Subject Client Id</label>

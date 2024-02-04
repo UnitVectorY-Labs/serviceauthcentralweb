@@ -124,6 +124,9 @@
                 </tbody>
               </table>
             </div>
+            <div v-if="client.jwtBearer.length == 0" class="text-center p-3">
+              <span class="fw-lighter">No client authorizations.</span>
+            </div>
 
             <button v-if="client.managementPermissions.canAddClientAuthorization" type="button" class="btn btn-success float-end" @click="openAddJwtBearerModal()" data-bs-toggle="modal" data-bs-target="#clientAddJwtBearerModal">
               <i class="bi bi-plus"></i>
@@ -168,6 +171,9 @@
                 </tr>
               </tbody>
             </table>
+            <div v-if="client.authorizationsAsSubject.length == 0" class="text-center p-3">
+              <span class="fw-lighter">No authorizations.</span>
+            </div>
           </div>
 
           <div class="col-lg-6 col-sm-12" v-if="client.managementPermissions.canAddAuthorization || client.managementPermissions.canDeleteAuthorization" >
@@ -203,6 +209,9 @@
                 </tr>
               </tbody>
             </table>
+            <div v-if="client.authorizationsAsAudience.length == 0" class="text-center p-3">
+              <span class="fw-lighter">No authorizations.</span>
+            </div>
           </div>
           </div>
         </div>
@@ -256,6 +265,7 @@ const GET_CLIENT = gql`
         canAddClientSecret
         canDeleteClientSecret
         canAddClientAuthorization
+        canDeleteClientAuthorization
         canAddAuthorization
         canDeleteAuthorization
         }

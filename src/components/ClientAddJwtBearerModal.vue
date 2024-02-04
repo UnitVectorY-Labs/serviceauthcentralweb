@@ -8,6 +8,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-info" role="alert">
+                            JWT Bearer authentication allows secure authentication with an external JWT, eliminating the need for a client secret.
+                        </div>
                         <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                         <div class="form-group mb-3" v-for="field in formFields" :key="field.id">
                             <label :for="field.id">{{ field.label }}</label>
