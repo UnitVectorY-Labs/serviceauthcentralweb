@@ -15,7 +15,7 @@
         console.log('Token:', token);
         // Navigate to another route or update state as necessary
         // Make sure token isn't stored in history
-        this.$router.replace('/');
+        this.$router.replace('/clients');
       } catch (error) {
         console.error('Error:', error);
         // Handle errors

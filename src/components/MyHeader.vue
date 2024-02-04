@@ -1,26 +1,34 @@
 <template>
-  <header class="p-3 bg-dark text-white">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <!-- Dynamic Title -->
-        <h1 class="mb-0 me-4 text-white">
-          <router-link :to="'/'" class="text-decoration-none text-white">{{ pageTitle }}</router-link>
-        </h1>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <!-- Brand/Title linked to home -->
+        <router-link to="/" class="navbar-brand">{{ pageTitle }}</router-link>
+
+        <!-- Toggler Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
         <!-- Navigation Links -->
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li v-for="link in navLinks" :key="link.path" class="nav-item">
-            <router-link v-if="!link.loginRequired || isTokenSet" :to="link.path" class="nav-link" :class="{ 'text-white fw-bold': isActive(link.path), 'text-white': !isActive(link.path) }">{{ link.label }}</router-link>
-          </li>
-        </ul>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li v-for="link in navLinks" :key="link.path" class="nav-item">
+              <router-link :to="link.path" class="nav-link" :class="{ 'active': isActive(link.path) }" v-if="!link.loginRequired || isTokenSet">
+                {{ link.label }}
+              </router-link>
+            </li>
+          </ul>
 
-        <div class="text-end">
-          <LoginButton />
+          <div class="ms-auto">
+            <LoginButton />
+          </div>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 </template>
+
 
 <script>
 

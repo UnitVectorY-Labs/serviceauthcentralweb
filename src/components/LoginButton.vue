@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-content-end">
     <button v-if="!isTokenSet" @click="signIn" class="btn btn-primary btn-sm">Sign In</button>
     <button v-else @click="performSignOut" class="btn btn-secondary btn-sm">Sign Out</button>
   </div>

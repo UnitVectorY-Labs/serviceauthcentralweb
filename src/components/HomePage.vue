@@ -2,7 +2,7 @@
   <div class="container mt-4">
     <div class="row">
       <div class="col-12">
-        <h2>Welcome to ServiceAuthCentral <a class="btn btn-light" data-bs-toggle="offcanvas" href="#whatIsServiceAuthCentral" role="button" aria-controls="whatIsServiceAuthCentral"><i class="bi bi-info-circle-fill custom-icon"></i></a></h2>
+        <h2>Get Started <a class="btn btn-light" data-bs-toggle="offcanvas" href="#whatIsServiceAuthCentral" role="button" aria-controls="whatIsServiceAuthCentral"><i class="bi bi-info-circle-fill custom-icon"></i></a></h2>
         <div class="accordion accordion-flush" id="accordionHomeInfo">
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
