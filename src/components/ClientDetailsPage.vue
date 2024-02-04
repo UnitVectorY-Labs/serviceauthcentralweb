@@ -25,7 +25,7 @@
                       <th scope="col">Field</th>
                       <th scope="col">Value</th>
                       <th scope="col">
-                          <button type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModal" title="Delete Client">
+                          <button v-if="client.managementPermissions.canDeleteClient" type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModal" title="Delete Client">
                               <i class="bi bi-trash"></i>
                           </button>
                       </th>
@@ -42,41 +42,41 @@
                       <td>{{ client.description }}</td>
                       <td></td>
                   </tr>
-                  <tr v-if="client.clientType == 'APPLICATION'">
+                  <tr v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
                       <td>Client Secret 1</td>
                       <td>
                         <span :class="{'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
-                              {{ client.clientSecret1Set ? 'Set' : 'Not Set' }}
-                          </span>
+                          {{ client.clientSecret1Set ? 'Set' : 'Not Set' }}
+                        </span>
                       </td>
                       <td>
                           <div v-if="client.clientSecret1Set">
-                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 1">
+                              <button v-if="client.managementPermissions.canDeleteClientSecret" type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 1">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
                           <div v-else>
-                              <button type="button" class="btn btn-success float-end" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
+                              <button v-if="client.managementPermissions.canAddClientSecret" type="button" class="btn btn-success float-end" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
                                   <i class="bi bi-plus"></i>
                               </button>
                           </div>
                       </td>
                   </tr>
-                  <tr v-if="client.clientType == 'APPLICATION'">
+                  <tr v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
                       <td>Client Secret 2</td>
                       <td>
                         <span :class="{'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
-                              {{ client.clientSecret2Set ? 'Set' : 'Not Set' }}
-                          </span>
+                          {{ client.clientSecret2Set ? 'Set' : 'Not Set' }}
+                        </span>
                       </td>
                       <td>
                           <div v-if="client.clientSecret2Set">
-                              <button type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 2">
+                              <button v-if="client.managementPermissions.canDeleteClientSecret" type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 2">
                                   <i class="bi bi-trash"></i>
                               </button>
                           </div>
                           <div v-else>
-                              <button type="button" class="btn btn-success float-end" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
+                              <button v-if="client.managementPermissions.canAddClientSecret" type="button" class="btn btn-success float-end" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
                                   <i class="bi bi-plus"></i>
                               </button>
                           </div>
@@ -87,7 +87,7 @@
 
           </div>
 
-          <div class="col-lg-6 col-sm-12"  v-if="client.clientType == 'APPLICATION'">
+          <div class="col-lg-6 col-sm-12"  v-if="client.managementPermissions.canAddClientAuthorization || client.managementPermissions.canDeleteClientAuthorization">
             <h3>Client Authorizations</h3>
             <div v-for="bearer in client.jwtBearer" :key="bearer.id">
               <table class="table table-striped table-hover">
@@ -97,7 +97,7 @@
                         <th scope="col">
                           <div class="d-flex justify-content-between align-items-end">
                             <div>Value</div>
-                            <button type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModal" title="Delete Client JWT Bearer">
+                            <button v-if="client.managementPermissions.canDeleteClientAuthorization" type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModal" title="Delete Client JWT Bearer">
                               <i class="bi bi-trash"></i>
                             </button>
                           </div>
@@ -125,7 +125,7 @@
               </table>
             </div>
 
-            <button type="button" class="btn btn-success float-end" @click="openAddJwtBearerModal()" data-bs-toggle="modal" data-bs-target="#clientAddJwtBearerModal">
+            <button v-if="client.managementPermissions.canAddClientAuthorization" type="button" class="btn btn-success float-end" @click="openAddJwtBearerModal()" data-bs-toggle="modal" data-bs-target="#clientAddJwtBearerModal">
               <i class="bi bi-plus"></i>
             </button>
           </div>
@@ -170,7 +170,7 @@
             </table>
           </div>
 
-          <div class="col-lg-6 col-sm-12" v-if="client.clientType == 'APPLICATION'" >
+          <div class="col-lg-6 col-sm-12" v-if="client.managementPermissions.canAddAuthorization || client.managementPermissions.canDeleteAuthorization" >
             <!-- Display authorizations for audiences if client is not null -->
             <h3>Authorized as Audience</h3>
             <span class="text-muted">The following clients are authorized authorized to access "<span class="text-primary fw-bold">{{ client.clientId }}</span>".</span>
@@ -180,7 +180,7 @@
                 <tr>
                   <th scope="col">Client Id</th>
                   <th scope="col" class="text-end">
-                    <button type="button" class="btn btn-success float-end" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
+                    <button v-if="client.managementPermissions.canAddAuthorization" type="button" class="btn btn-success float-end" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
                       <i class="bi bi-plus"></i>
                     </button>
                   </th>
@@ -189,11 +189,10 @@
               <tbody>
                 <!-- Loop through authorizationsAsAudience and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
-                  <!--<td>{{ authorization.id }}</td>-->
                   <td>{{ authorization.subject.clientId }}</td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
-                      <button type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
+                      <button v-if="client.managementPermissions.canDeleteAuthorization" type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
                         <i class="bi bi-trash"></i>
                       </button>
                       <router-link :to="'/clients/' + encodeURIComponent(authorization.subject.clientId)" class="btn btn-primary">
@@ -246,12 +245,20 @@ const GET_CLIENT = gql`
         }
       }
       jwtBearer {
-          id
-          jwksUrl
-          iss
-          sub
-          aud
+        id
+        jwksUrl
+        iss
+        sub
+        aud
       }
+      managementPermissions {
+        canDeleteClient
+        canAddClientSecret
+        canDeleteClientSecret
+        canAddClientAuthorization
+        canAddAuthorization
+        canDeleteAuthorization
+        }
     }
   }
 `;
