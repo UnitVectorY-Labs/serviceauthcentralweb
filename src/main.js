@@ -12,6 +12,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import MyHeader from './components/MyHeader.vue';
 import MyFooter from './components/MyFooter.vue';
 
+import DateTimeComponent from './components/DateTimeComponent.vue';
+
 import Error404Component from './components/Error404Component.vue';
 import Error500Component from './components/Error500Component.vue';
 import LoadingComponent from './components/LoadingComponent.vue';
@@ -39,6 +41,7 @@ const router = createRouter({
 const app = createApp(App);
 app.component('MyHeader', MyHeader);
 app.component('MyFooter', MyFooter);
+app.component('DateTimeComponent', DateTimeComponent);
 app.component('Error404Component', Error404Component);
 app.component('Error500Component', Error500Component);
 app.component('LoadingComponent', LoadingComponent);

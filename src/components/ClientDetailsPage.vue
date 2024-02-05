@@ -42,12 +42,18 @@
                       <td><p class="text-break">{{ client.description }}</p></td>
                       <td></td>
                   </tr>
+                  <tr>
+                      <td>Created</td>
+                      <td><DateTimeComponent :date="client.clientCreated" /></td>
+                      <td></td>
+                  </tr>
                   <tr v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
                       <td>Client Secret 1</td>
                       <td>
-                        <span :class="{'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
+                        <span :class="{'me-2': true, 'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
                           {{ client.clientSecret1Set ? 'Set' : 'Not Set' }}
                         </span>
+                        <DateTimeComponent v-if="client.clientSecret1Set" :date="client.clientSecret1Updated" />
                       </td>
                       <td>
                           <div v-if="client.clientSecret1Set">
@@ -65,9 +71,10 @@
                   <tr v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
                       <td>Client Secret 2</td>
                       <td>
-                        <span :class="{'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
+                        <span :class="{'me-2': true, 'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
                           {{ client.clientSecret2Set ? 'Set' : 'Not Set' }}
                         </span>
+                        <DateTimeComponent v-if="client.clientSecret2Set" :date="client.clientSecret2Updated" />
                       </td>
                       <td>
                           <div v-if="client.clientSecret2Set">
@@ -144,6 +151,7 @@
               <thead class="table-dark">
                 <tr>
                   <th scope="col">Client Id</th>
+                  <th scope="col">Created</th>
                   <th scope="col" class="text-end">
                     <!-- Right now not allowing granting access to other resources on a client page, just granting access to other clients. -->
                     <button type="button" class="btn btn-success float-end invisible" disabled="disabled" >
@@ -155,8 +163,8 @@
               <tbody>
                 <!-- Loop through authorizationsAsSubject and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsSubject" :key="authorization.id">
-                  <!--<td>{{ authorization.id }}</td>-->
                   <td><p class="text-break">{{ authorization.audience.clientId }}</p></td>
+                  <td><DateTimeComponent :date="authorization.authorizationCreated" /></td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
                       <!-- Right now not allowing deauthorize either -->
@@ -185,6 +193,7 @@
               <thead class="table-dark">
                 <tr>
                   <th scope="col">Client Id</th>
+                  <th scope="col">Created</th>
                   <th scope="col" class="text-end">
                     <button v-if="client.managementPermissions.canAddAuthorization" type="button" class="btn btn-success float-end" @click="resetAuthorize()" data-bs-toggle="modal" data-bs-target="#clientAuthorizeModal">
                       <i class="bi bi-plus"></i>
@@ -196,6 +205,7 @@
                 <!-- Loop through authorizationsAsAudience and display them in rows -->
                 <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
                   <td><p class="text-break">{{ authorization.subject.clientId }}</p></td>
+                  <td><DateTimeComponent :date="authorization.authorizationCreated" /></td>
                   <td class="text-end">
                     <div class="btn-group" role="group">
                       <button v-if="client.managementPermissions.canDeleteAuthorization" type="button" class="btn btn-danger float-end"  @click="openDeauthorizeModal(authorization.subject.clientId)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeModal">
@@ -237,18 +247,23 @@ const GET_CLIENT = gql`
   query Client($clientId: ID!) { 
     client(clientId: $clientId) {
       clientId
+      clientCreated
       description
       clientType
       clientSecret1Set
+      clientSecret1Updated
       clientSecret2Set
+      clientSecret2Updated
       authorizationsAsSubject {
         id
+        authorizationCreated
         audience {
           clientId
         }
       }
       authorizationsAsAudience {
         id
+        authorizationCreated
         subject {
           clientId
         }
