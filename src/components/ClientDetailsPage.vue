@@ -317,7 +317,7 @@ export default {
   methods: {
     handleDeletion() {
       client.resetStore(); // We made a change so reset the local cache
-      this.$router.push('/'); // Navigate back to home
+      this.$router.push('/clients'); // Navigate back to home
     },
     openSecretModal(secretType) {
       // Assuming the child component has a method named 'generateSecret'

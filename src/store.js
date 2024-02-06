@@ -1,5 +1,7 @@
 // store.js
 import { createStore } from 'vuex';
+import { jwtDecode } from 'jwt-decode';
+
 
 export default createStore({
   state() {
@@ -9,6 +11,11 @@ export default createStore({
   },
   getters: {
     isTokenSet: (state) => state.token !== null,
+    tokenExpiration: (state) => {
+      if (!state.token) return null;
+      const decoded = jwtDecode(state.token);
+      return decoded.exp;
+    }
   },
   mutations: {
     setToken(state, newToken) {
