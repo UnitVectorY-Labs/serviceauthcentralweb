@@ -14,38 +14,10 @@
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAddJwtBearerModal ref="addJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <clientDeauthorizeJwtBearerModal ref="deauthorizeJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        <ClientAddAvailableScopeModal ref="addAvailableScopeModal" v-if="client" :client="client" />
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <ClientInfoComponent :client="client" />
-
-
-          <h3>Client Available Scopes</h3>
-          <span class="text-muted">The list of scopes this client recognizes that can be requested by another client if authorization is granted.</span>
-          <table class="table table-striped table-hover">
-            <thead class="table-dark">
-                  <tr>
-                      <th scope="col">Scope</th>
-                      <th scope="col">Description</th>
-                      <th scope="col">
-                          <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#clientAddAvailableScopeModal" title="Add Available Scope">
-                              <i class="bi bi-plus"></i>
-                          </button>
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr v-for="availableScope in client.availableScopes" :key="availableScope.scope">
-                    <td><span class="badge text-bg-dark">{{ availableScope.scope }}</span></td>
-                    <td>{{ availableScope.description }}</td>
-                    <td></td>
-                  </tr>
-              </tbody>
-          </table>
-          <div v-if="client.availableScopes.length == 0" class="text-center p-3">
-              <span class="fw-lighter">No client available scopes.</span>
-            </div>
-
+            <ClientAvailableScopesComponent :client="client" />
           </div>
 
           <div class="col-lg-6 col-sm-12">
@@ -263,6 +235,7 @@ import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
 
 import ClientInfoComponent from './ClientInfoComponent.vue';
+import ClientAvailableScopesComponent from './ClientAvailableScopesComponent.vue';
 
 import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
 import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
@@ -270,7 +243,7 @@ import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
 import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
 import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
 import clientDeauthorizeJwtBearerModal from './ClientDeauthorizeJwtBearerModal.vue';
-import ClientAddAvailableScopeModal from './ClientAddAvailableScopeModal.vue';
+
 
 const GET_CLIENT = gql`
   query Client($clientId: ID!) { 
@@ -327,13 +300,13 @@ export default {
   name: 'ClientDetailsPage',
   components: {
       ClientInfoComponent,
+      ClientAvailableScopesComponent,
       ClientCreateSecretModal,
       ClientDeleteSecretModal,
       ClientAuthorizeModal,
       ClientDeauthorizeModal,
       ClientAddJwtBearerModal,
       clientDeauthorizeJwtBearerModal,
-      ClientAddAvailableScopeModal,
   },
   data() {
     return {
