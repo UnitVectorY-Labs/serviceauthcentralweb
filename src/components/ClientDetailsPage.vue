@@ -8,7 +8,6 @@
       </div>
       <div v-else-if="client">
 
-        <ClientDeleteModal v-if="client" :client="client" @deleted="handleDeletion" />
         <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
@@ -18,38 +17,8 @@
         <ClientAddAvailableScopeModal ref="addAvailableScopeModal" v-if="client" :client="client" />
         <div class="row">
           <div class="col-lg-6 col-sm-12">
-            <h3>Client</h3>
-            <span class="text-muted">A client is used by a service for both making requests to other clients and for receiving requests from other clients.</span>
-            <table class="table table-striped table-hover">
-              <thead class="table-dark">
-                  <tr>
-                      <th scope="col">Field</th>
-                      <th scope="col">Value</th>
-                      <th scope="col">
-                          <button v-if="client.managementPermissions.canDeleteClient" type="button" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteClientModal" title="Delete Client">
-                              <i class="bi bi-trash"></i>
-                          </button>
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>Client Id</td>
-                      <td><p class="text-break">{{ client.clientId }}</p></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <td>Description</td>
-                      <td><p class="text-break">{{ client.description }}</p></td>
-                      <td></td>
-                  </tr>
-                  <tr>
-                      <td>Created</td>
-                      <td><DateTimeComponent :date="client.clientCreated" /></td>
-                      <td></td>
-                  </tr>
-              </tbody>
-          </table>
+            <ClientInfoComponent :client="client" />
+
 
           <h3>Client Available Scopes</h3>
           <span class="text-muted">The list of scopes this client recognizes that can be requested by another client if authorization is granted.</span>
@@ -292,7 +261,9 @@
 <script>
 import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
-import ClientDeleteModal from './ClientDeleteModal.vue';
+
+import ClientInfoComponent from './ClientInfoComponent.vue';
+
 import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
 import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
 import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
@@ -355,7 +326,7 @@ const GET_CLIENT = gql`
 export default {
   name: 'ClientDetailsPage',
   components: {
-      ClientDeleteModal,
+      ClientInfoComponent,
       ClientCreateSecretModal,
       ClientDeleteSecretModal,
       ClientAuthorizeModal,
@@ -380,10 +351,6 @@ export default {
     '$route.params.clientId': 'loadClient',
   },
   methods: {
-    handleDeletion() {
-      client.resetStore(); // We made a change so reset the local cache
-      this.$router.push('/clients'); // Navigate back to home
-    },
     openSecretModal(secretType) {
       // Assuming the child component has a method named 'generateSecret'
       if (this.$refs.secretModal) {
