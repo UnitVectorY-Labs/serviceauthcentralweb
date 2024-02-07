@@ -51,6 +51,7 @@ export default {
     props: {
         client: Object
     },
+    emits: ['refreshClient'],
     data() {
         return {
             formFields: [

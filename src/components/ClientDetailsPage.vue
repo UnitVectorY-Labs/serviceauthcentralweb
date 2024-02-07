@@ -12,8 +12,6 @@
         <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        <ClientAddJwtBearerModal ref="addJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        <clientDeauthorizeJwtBearerModal ref="deauthorizeJwtBearerModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <ClientInfoComponent :client="client" />
@@ -21,51 +19,7 @@
           </div>
 
           <div class="col-lg-6 col-sm-12">
-            <div v-if="client.managementPermissions.canAddClientAuthorization || client.managementPermissions.canDeleteClientAuthorization">
-              <h3>Client Authorizations</h3>
-              <span class="text-muted">The preferred method for authenticating clients is using an existing JWT to authenticate the client that is registered here.</span>
-              <button v-if="client.managementPermissions.canAddClientAuthorization" type="button" class="btn btn-success float-end" @click="openAddJwtBearerModal()" data-bs-toggle="modal" data-bs-target="#clientAddJwtBearerModal">
-                <i class="bi bi-plus"></i>
-              </button>
-              <div v-for="bearer in client.jwtBearer" :key="bearer.id">
-                <table class="table table-striped table-hover">
-                  <thead class="table-dark">
-                      <tr>
-                          <th scope="col">Field</th>
-                          <th scope="col">
-                            <div class="d-flex justify-content-between align-items-end">
-                              <div>Value</div>
-                              <button v-if="client.managementPermissions.canDeleteClientAuthorization" type="button" class="btn btn-danger float-end" @click="openDeauthorizeJwtBearerModal(bearer)" data-bs-toggle="modal" data-bs-target="#clientDeauthorizeJwtBearerModal" title="Delete Client JWT Bearer">
-                                <i class="bi bi-trash"></i>
-                              </button>
-                            </div>
-                          </th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>JWKS URL</td>
-                          <td>{{ bearer.jwksUrl }}</td>
-                      </tr>
-                      <tr>
-                          <td>Issuer</td>
-                          <td>{{ bearer.iss }}</td>
-                      </tr>
-                      <tr>
-                          <td>Audience</td>
-                          <td>{{ bearer.aud }}</td>
-                      </tr>
-                      <tr>
-                          <td>Subject</td>
-                          <td>{{ bearer.sub }}</td>
-                      </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div v-if="client.jwtBearer.length == 0" class="text-center p-3">
-                <span class="fw-lighter">No client authorizations.</span>
-              </div>
-            </div>
+            <ClientJwtBearerComponent :client="client" @refreshClient="refreshClient" />
             <div v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
               <h3>Client Secrets</h3>
               <span class="text-muted">Client secrets are used to authenticate clients and are not preferred. Two client secrets can be active at a time to facilitate rotation.</span>
@@ -236,13 +190,12 @@ import client from '../apollo-client';
 
 import ClientInfoComponent from './ClientInfoComponent.vue';
 import ClientAvailableScopesComponent from './ClientAvailableScopesComponent.vue';
+import ClientJwtBearerComponent from './ClientJwtBearerComponent.vue';
 
 import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
 import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
 import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
 import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
-import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
-import clientDeauthorizeJwtBearerModal from './ClientDeauthorizeJwtBearerModal.vue';
 
 
 const GET_CLIENT = gql`
@@ -301,12 +254,11 @@ export default {
   components: {
       ClientInfoComponent,
       ClientAvailableScopesComponent,
+      ClientJwtBearerComponent,
       ClientCreateSecretModal,
       ClientDeleteSecretModal,
       ClientAuthorizeModal,
       ClientDeauthorizeModal,
-      ClientAddJwtBearerModal,
-      clientDeauthorizeJwtBearerModal,
   },
   data() {
     return {
