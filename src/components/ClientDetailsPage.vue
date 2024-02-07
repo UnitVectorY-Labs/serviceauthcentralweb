@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-lg-6 col-sm-12">
             <ClientInfoComponent :client="client" />
-            <ClientAvailableScopesComponent :client="client" />
+            <ClientAvailableScopesComponent :client="client" @refreshClient="refreshClient" />
           </div>
 
           <div class="col-lg-6 col-sm-12">
