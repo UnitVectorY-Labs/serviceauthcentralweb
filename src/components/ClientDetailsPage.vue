@@ -93,9 +93,12 @@ const GET_CLIENT = gql`
         canDeleteClientSecret
         canAddClientAuthorization
         canDeleteClientAuthorization
+        canAddAvailableScope
         canAddAuthorization
         canDeleteAuthorization
-        }
+        canAuthorizeAddScope
+        canAuthorizeRemoveScope
+      }
     }
   }
 `;

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="client.managementPermissions.canAddAvailableScope">
         <ClientAddAvailableScopeModal ref="addAvailableScopeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         
         <h3>Client Available Scopes</h3>
