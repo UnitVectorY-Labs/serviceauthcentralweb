@@ -15,6 +15,11 @@ export default {
   props: ['date'],
   computed: {
     formattedDate() {
+      // Defensive statement to protect this if the date is null
+      if(this.date == null){
+        return "";
+      }
+
       const dateObj = parseISO(this.date);
       const formatter = new Intl.DateTimeFormat('default', {
         year: 'numeric',
