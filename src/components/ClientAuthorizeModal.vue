@@ -16,6 +16,15 @@
                             <label for="authorizedSubject">Authorized Subject Client Id</label>
                             <input type="text" class="form-control" id="authorizedSubject" v-model="authorizedSubject" :disabled="loading" placeholder="Enter Client Id">
                         </div>
+                        <div v-if="client.availableScopes && client.availableScopes.length > 0" class="form-group">
+                        <label>Authorized Scopes</label>
+                            <div class="form-check" v-for="(scope, index) in client.availableScopes" :key="scope.scope">
+                                <input class="form-check-input" type="checkbox" :value="scope.scope" v-model="selectedScopes" :id="`scope-${index}`">
+                                <label class="form-check-label" :for="`scope-${index}`">
+                                    <span class="badge text-bg-dark">{{ scope.scope }}</span>
+                                </label>
+                            </div>
+                        </div> 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -40,8 +49,8 @@ import { gql } from '@apollo/client/core';
 import client from '../apollo-client';
 
 const AUTHORIZE_CLIENT = gql`
-    mutation Authorize($subject: String!, $audience: String!) {
-        authorize(subject: $subject, audience: $audience) {
+    mutation Authorize($subject: String!, $audience: String!, $authorizedScopes: [String]) {
+        authorize(subject: $subject, audience: $audience, authorizedScopes: $authorizedScopes) {
             success
         }
     }
@@ -56,7 +65,8 @@ export default {
             authorizedSubject: '',
             loading: false,
             errorMessage: null,
-            authorizedSuccess: false
+            authorizedSuccess: false,
+            selectedScopes: [], 
         };
     },
     methods: {
@@ -68,7 +78,8 @@ export default {
                     mutation: AUTHORIZE_CLIENT, 
                     variables: { 
                         subject: this.authorizedSubject,
-                        audience: this.client.clientId
+                        audience: this.client.clientId,
+                        authorizedScopes: this.selectedScopes 
                     }
                 });
 
@@ -91,6 +102,7 @@ export default {
             this.loading = false;
             this.errorMessage = null;
             this.authorizedSuccess = false;
+            this.selectedScopes = [];
         }
     }
 };
