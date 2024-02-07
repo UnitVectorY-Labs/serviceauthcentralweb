@@ -8,8 +8,6 @@
       </div>
       <div v-else-if="client">
 
-        <ClientCreateSecretModal ref="secretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
-        <ClientDeleteSecretModal ref="deleteSecretModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <div class="row">
@@ -20,68 +18,7 @@
 
           <div class="col-lg-6 col-sm-12">
             <ClientJwtBearerComponent :client="client" @refreshClient="refreshClient" />
-            <div v-if="client.managementPermissions.canAddClientSecret || client.managementPermissions.canDeleteClientSecret">
-              <h3>Client Secrets</h3>
-              <span class="text-muted">Client secrets are used to authenticate clients and are not preferred. Two client secrets can be active at a time to facilitate rotation.</span>
-              <table class="table table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th scope="col">Field</th>
-                        <th scope="col">Value</th>
-                        <th scope="col">Created</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Client Secret 1</td>
-                        <td>
-                          <span :class="{'me-2': true, 'badge': true, 'bg-primary': client.clientSecret1Set, 'bg-secondary': !client.clientSecret1Set}">
-                            {{ client.clientSecret1Set ? 'Set' : 'Not Set' }}
-                          </span>
-                        </td>
-                        <td>
-                          <DateTimeComponent v-if="client.clientSecret1Set" :date="client.clientSecret1Updated" />
-                        </td>
-                        <td>
-                            <div v-if="client.clientSecret1Set">
-                                <button v-if="client.managementPermissions.canDeleteClientSecret" type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 1">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div v-else>
-                                <button v-if="client.managementPermissions.canAddClientSecret" type="button" class="btn btn-success float-end" @click="openSecretModal('secret1')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 1">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Client Secret 2</td>
-                        <td>
-                          <span :class="{'me-2': true, 'badge': true, 'bg-primary': client.clientSecret2Set, 'bg-secondary': !client.clientSecret2Set}">
-                            {{ client.clientSecret2Set ? 'Set' : 'Not Set' }}
-                          </span>
-                        </td>
-                        <td>
-                          <DateTimeComponent v-if="client.clientSecret2Set" :date="client.clientSecret2Updated" />
-                        </td>
-                        <td>
-                            <div v-if="client.clientSecret2Set">
-                                <button v-if="client.managementPermissions.canDeleteClientSecret" type="button" class="btn btn-danger float-end" @click="openDeleteSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#deleteClientSecretModal" title="Delete Secret 2">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-                            <div v-else>
-                                <button v-if="client.managementPermissions.canAddClientSecret" type="button" class="btn btn-success float-end" @click="openSecretModal('secret2')" data-bs-toggle="modal" data-bs-target="#clientCreateSecretModal" title="Create Secret 2">
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                  </tbody>
-              </table>
-            </div>
+            <ClientSecretsComponent :client="client" @refreshClient="refreshClient" />
           </div>
         </div>
         <div class="row">
@@ -191,9 +128,8 @@ import client from '../apollo-client';
 import ClientInfoComponent from './ClientInfoComponent.vue';
 import ClientAvailableScopesComponent from './ClientAvailableScopesComponent.vue';
 import ClientJwtBearerComponent from './ClientJwtBearerComponent.vue';
+import ClientSecretsComponent from './ClientSecretsComponent.vue';
 
-import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
-import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
 import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
 import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
 
@@ -255,8 +191,7 @@ export default {
       ClientInfoComponent,
       ClientAvailableScopesComponent,
       ClientJwtBearerComponent,
-      ClientCreateSecretModal,
-      ClientDeleteSecretModal,
+      ClientSecretsComponent,
       ClientAuthorizeModal,
       ClientDeauthorizeModal,
   },
@@ -276,30 +211,9 @@ export default {
     '$route.params.clientId': 'loadClient',
   },
   methods: {
-    openSecretModal(secretType) {
-      // Assuming the child component has a method named 'generateSecret'
-      if (this.$refs.secretModal) {
-        this.$refs.secretModal.generateSecret(secretType);
-      }
-    },
-    openDeleteSecretModal(secretType) {
-      if (this.$refs.deleteSecretModal) {
-        this.$refs.deleteSecretModal.setSecretType(secretType);
-      }
-    },
     openDeauthorizeModal(subject) {
       if (this.$refs.deauthorizeModal) {
         this.$refs.deauthorizeModal.setDeauthorizedSubject(subject);
-      }
-    },
-    openAddJwtBearerModal() {
-      if(this.$refs.addJwtBearerModal){
-        this.$refs.addJwtBearerModal.resetData();
-      }
-    },
-    openDeauthorizeJwtBearerModal(jwtBearer) {
-      if(this.$refs.deauthorizeJwtBearerModal){
-        this.$refs.deauthorizeJwtBearerModal.setJwtBearer(jwtBearer);
       }
     },
     resetAuthorize() {
