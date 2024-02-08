@@ -2,6 +2,7 @@
     <div>
         <ClientAuthorizeModal ref="authorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         <ClientDeauthorizeModal ref="deauthorizeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
+        <ClientAuthorizedRemoveScopeModal ref="authorizedRemoveScopeModal" v-if="client" :client="client" @refreshClient="refreshClient" />
         
         <!-- Display authorizations for audiences if client is not null -->
         <h3>Authorized as Audience</h3>
@@ -25,7 +26,16 @@
             <tr v-for="authorization in client.authorizationsAsAudience" :key="authorization.id">
                 <td><p class="text-break">{{ authorization.subject.clientId }}</p></td>
                 <td>
-                    <span class="badge text-bg-dark" v-for="scope in authorization.authorizedScopes" :key="scope">{{ scope }}</span>
+                    <div class="d-flex align-items-center flex-wrap my-button-group">
+                        <div class="btn-group me-2 mb-2" role="group" v-for="scope in authorization.authorizedScopes" :key="scope">
+                            <span class="btn btn-dark btn-sm custom-disabled">{{ scope }}</span>
+                            <button type="button" class="btn btn-danger btn-sm" @click="removeScope(authorization.subject.clientId, scope)" data-bs-toggle="modal" data-bs-target="#authorizedRemoveScopeModal">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        <!-- Green button after all scopes -->
+                        <button type="button" class="btn btn-success btn-sm me-2 mb-2" @click="addScope(authorization.subject.clientId)"><i class="bi bi-plus"></i></button>
+                    </div>
                 </td>
                 <td><DateTimeComponent :date="authorization.authorizationCreated" /></td>
                 <td class="text-end">
@@ -47,10 +57,19 @@
     </div>
 </template>
 
+<style scoped>
+.custom-disabled {
+    pointer-events: none; /* Prevents mouse events from being captured */
+    color: #fff; /* Adjusts text color if needed */
+    background-color: #000000; /* Keeps background color dark */
+}
+</style>
+
 <script>
 
 import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
 import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
+import ClientAuthorizedRemoveScopeModal from './ClientAuthorizedRemoveScopeModal.vue';
 
 export default {
     props: ['client'],
@@ -58,6 +77,7 @@ export default {
     components: {
         ClientAuthorizeModal,
         ClientDeauthorizeModal,
+        ClientAuthorizedRemoveScopeModal,
     },
     methods: {
         openDeauthorizeModal(subject) {
@@ -69,6 +89,14 @@ export default {
             if(this.$refs.authorizeModal){
                 this.$refs.authorizeModal.resetData();
             }
+        },
+        removeScope(subject, scope) {
+            if (this.$refs.authorizedRemoveScopeModal) {
+                this.$refs.authorizedRemoveScopeModal.setSubjectAndScope(subject, scope);
+            }
+        },
+        addScope(subject) {
+            alert(subject);
         },
         refreshClient() {
             this.$emit('refreshClient', {});

@@ -18,7 +18,9 @@
             </thead>
             <tbody>
             <tr v-for="availableScope in client.availableScopes" :key="availableScope.scope">
-                <td><span class="badge text-bg-dark">{{ availableScope.scope }}</span></td>
+                <td>
+                    <span class="btn btn-dark btn-sm custom-disabled">{{ availableScope.scope }}</span>
+                </td>
                 <td>{{ availableScope.description }}</td>
                 <td></td>
                 </tr>
@@ -29,6 +31,14 @@
         </div>
     </div>
 </template>
+
+<style>
+.custom-disabled {
+    pointer-events: none; /* Prevents mouse events from being captured */
+    color: #fff; /* Adjusts text color if needed */
+    background-color: #000000; /* Keeps background color dark */
+}
+</style>
 
 <script>
 
