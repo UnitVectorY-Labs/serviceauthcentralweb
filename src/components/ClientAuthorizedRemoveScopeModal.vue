@@ -14,7 +14,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger" :disabled="loading" data-bs-dismiss="modal" @click="confirmDeauthorize">Confirm Deauthorize</button>
+            <button type="button" class="btn btn-danger" :disabled="loading" data-bs-dismiss="modal" @click="confirmRemove">Confirm Deauthorize</button>
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@
         removeScope: null,
         loading: false,
         errorMessage: null,
-        deauthorizedSuccess: false
+        removeSuccess: false
       };
     },
     methods: {
@@ -53,9 +53,9 @@
         this.removeScope = removeScope;
         this.loading = false;
         this.errorMessage = null;
-        this.deauthorizedSuccess = false;
+        this.removeSuccess = false;
       },
-      async confirmDeauthorize() {
+      async confirmRemove() {
         this.loading = true;
         try {
           const response = await client.mutate({ 
@@ -67,8 +67,8 @@
             }
           });
   
-          if (response.data.deauthorize.success) {
-            this.deauthorizedSuccess = true;
+          if (response.data.authorizeRemoveScope.success) {
+            this.removeSuccess = true;
             this.$emit('refreshClient');
           } else {
             this.errorMessage = "Failed to remove scope from client.";

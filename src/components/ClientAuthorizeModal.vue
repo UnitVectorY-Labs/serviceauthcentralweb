@@ -17,7 +17,7 @@
                             <input type="text" class="form-control" id="authorizedSubject" v-model="authorizedSubject" :disabled="loading" placeholder="Enter Client Id">
                         </div>
                         <div v-if="client.availableScopes && client.availableScopes.length > 0" class="form-group">
-                        <label>Authorized Scopes</label>
+                            <label>Authorized Scopes</label>
                             <div class="form-check" v-for="(scope, index) in client.availableScopes" :key="scope.scope">
                                 <input class="form-check-input" type="checkbox" :value="scope.scope" v-model="selectedScopes" :id="`scope-${index}`">
                                 <label class="form-check-label" :for="`scope-${index}`">
