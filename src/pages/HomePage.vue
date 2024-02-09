@@ -114,6 +114,7 @@
       <div class="offcanvas-body">
         <div>
           <p>ServiceAuthCentral is a tool designed to streamline authorization for microservices. Here's what makes it stand out:</p>
+          <img class="float-end ms-3 mb-2" src="@/assets/logo.png" height="150" width="150" alt="ServiceAuthCentral Logo"/>
           <ul>
             <li><strong>Open Source:</strong> Freely available <a href="https://github.com/UnitVectorY-Labs/ServiceAuthCentral"><i class="bi bi-github"></i></a> consisting of a centralized authorization server, management server, and web based management frontend.</li>
             <li><strong>Server-to-Server Authentication:</strong> Targets solving server-to-server authentication for microservices using the client credentials OAuth 2.0 flow.</li>

@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <!-- Brand/Title linked to home -->
-        <router-link to="/" class="navbar-brand">{{ pageTitle }}</router-link>
+        <router-link to="/" class="navbar-brand"><img src="@/assets/logo_transparent.png" height="50" width="50" alt="ServiceAuthCentral Logo"/>{{ pageTitle }}</router-link>
 
         <!-- Toggler Button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
