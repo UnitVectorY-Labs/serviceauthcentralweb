@@ -6,7 +6,7 @@
       <div v-else-if="notFound">
         <Error404Component/>
       </div>
-      <div v-else-if="client">
+      <div v-else-if="client" v-show="!loading">
 
         <div class="row">
           <div class="col-lg-6 col-sm-12">
@@ -28,11 +28,11 @@
           <div class="col-lg-6 col-sm-12" v-if="client.managementPermissions.canAddAuthorization || client.managementPermissions.canDeleteAuthorization" >
             <ClientAuthorizedAsAudienceComponent :client="client" @refreshClient="refreshClient" />
           </div>
-          </div>
         </div>
-        <div v-else>
-          <LoadingComponent/>
-        </div>
+      </div>
+      <div v-if="loading">
+          <LoadingComponent />
+      </div>
     </div>
   </template>
   
@@ -118,10 +118,12 @@ export default {
       client: null, // Store the specific client
       notFound: false,
       serverError: false,
+      loading: true,
     };
   },
   mounted() {
     const clientId = this.$route.params.clientId; // Get the clientId from the route
+    this.loading = true;
     this.loadClient(clientId, false);
   },
   watch: {
@@ -133,6 +135,9 @@ export default {
       this.loadClient(this.client.clientId, true);
     },
     async loadClient(clientId, refresh) {
+      if(refresh != false){
+        this.loading = true;
+      }
       try {
         const { data } = await client.query({ 
           query: GET_CLIENT, 
@@ -141,6 +146,7 @@ export default {
         });
         if (data.client != null) {
           this.client = data.client;
+          this.loading = false;
         } else {
           this.notFound = true;
         }

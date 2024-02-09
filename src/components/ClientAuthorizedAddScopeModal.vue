@@ -84,7 +84,6 @@
       },
       async confirmAuthorize() {
         this.loading = true;
-        console.log(this.selectedScope);
         try {
           const response = await client.mutate({
             mutation: AUTHORIZE_ADD_SCOPE,
