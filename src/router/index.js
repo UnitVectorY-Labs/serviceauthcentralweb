@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Import route components
-import HomePage from '@/components/HomePage.vue';
-import CallbackPage from '@/components/CallbackPage.vue';
-import ClientsPage from '@/components/ClientsPage.vue';
-import ClientDetailsPage from '@/components/ClientDetailsPage.vue';
-import ClientCreatePage from '@/components/ClientCreatePage.vue';
+import HomePage from '@/pages/HomePage.vue';
+import CallbackPage from '@/pages/CallbackPage.vue';
+import ClientsPage from '@/pages/ClientsPage.vue';
+import ClientDetailsPage from '@/pages/ClientDetailsPage.vue';
+import ClientCreatePage from '@/pages/ClientCreatePage.vue';
 import Error404Component from '@/components/Error404Component.vue';
 
 const routes = [
