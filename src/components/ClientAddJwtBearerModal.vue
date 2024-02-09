@@ -37,7 +37,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const AUTHORIZE_JWT_BEARER = gql`
     mutation AuthorizeJwtBearer($clientId: String!, $jwksUrl: String!, $iss: String!, $sub: String!, $aud: String!) {

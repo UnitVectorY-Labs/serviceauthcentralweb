@@ -39,14 +39,14 @@
   
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
-import ClientInfoComponent from './ClientInfoComponent.vue';
-import ClientAvailableScopesComponent from './ClientAvailableScopesComponent.vue';
-import ClientJwtBearerComponent from './ClientJwtBearerComponent.vue';
-import ClientSecretsComponent from './ClientSecretsComponent.vue';
-import ClientAuthorizedAsSubjectComponent from './ClientAuthorizedAsSubjectComponent.vue';
-import ClientAuthorizedAsAudienceComponent from './ClientAuthorizedAsAudienceComponent.vue';
+import ClientInfoComponent from '@/components/ClientInfoComponent.vue';
+import ClientAvailableScopesComponent from '@/components/ClientAvailableScopesComponent.vue';
+import ClientJwtBearerComponent from '@/components/ClientJwtBearerComponent.vue';
+import ClientSecretsComponent from '@/components/ClientSecretsComponent.vue';
+import ClientAuthorizedAsSubjectComponent from '@/components/ClientAuthorizedAsSubjectComponent.vue';
+import ClientAuthorizedAsAudienceComponent from '@/components/ClientAuthorizedAsAudienceComponent.vue';
 
 
 const GET_CLIENT = gql`
@@ -152,4 +152,3 @@ export default {
   },
 };
 </script>
-  

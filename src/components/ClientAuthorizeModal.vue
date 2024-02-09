@@ -46,7 +46,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const AUTHORIZE_CLIENT = gql`
     mutation Authorize($subject: String!, $audience: String!, $authorizedScopes: [String]) {

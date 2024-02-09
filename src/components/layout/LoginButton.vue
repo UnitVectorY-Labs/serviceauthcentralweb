@@ -8,7 +8,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { authorize } from '@/services/authService.js';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 export default {
   name: 'LoginButton',

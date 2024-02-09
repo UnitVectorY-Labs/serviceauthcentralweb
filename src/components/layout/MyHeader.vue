@@ -32,7 +32,7 @@
 
 <script>
 
-import LoginButton from './LoginButton.vue';
+import LoginButton from '@/components/layout/LoginButton.vue';
 import { mapGetters } from 'vuex';
 
 export default {

@@ -22,7 +22,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const DELETE_CLIENT = gql`
   mutation DeleteClient($clientId: String!) {

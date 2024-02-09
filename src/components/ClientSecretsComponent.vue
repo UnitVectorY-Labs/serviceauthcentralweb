@@ -68,8 +68,8 @@
 
 <script>
 
-import ClientCreateSecretModal from './ClientCreateSecretModal.vue';
-import ClientDeleteSecretModal from './ClientDeleteSecretModal.vue';
+import ClientCreateSecretModal from '@/components/ClientCreateSecretModal.vue';
+import ClientDeleteSecretModal from '@/components/ClientDeleteSecretModal.vue';
 
 export default {
     props: ['client'],

@@ -59,8 +59,8 @@
 
 <script>
 
-import ClientAddJwtBearerModal from './ClientAddJwtBearerModal';
-import ClientDeauthorizeJwtBearerModal from './ClientDeauthorizeJwtBearerModal.vue';
+import ClientAddJwtBearerModal from '@/components/ClientAddJwtBearerModal';
+import ClientDeauthorizeJwtBearerModal from '@/components/ClientDeauthorizeJwtBearerModal.vue';
 
 
 export default {

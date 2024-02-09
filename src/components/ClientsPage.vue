@@ -48,7 +48,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const GET_CLIENTS = gql`
   query Clients($first: Int, $after: String, $last: Int, $before: String) {

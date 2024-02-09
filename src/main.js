@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import store from './store.js';
+import App from '@/App.vue'
+import store from '@/store';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import "bootstrap";
@@ -9,20 +9,20 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 
 // Import components here
-import MyHeader from './components/MyHeader.vue';
-import MyFooter from './components/MyFooter.vue';
+import MyHeader from '@/components/layout/MyHeader.vue';
+import MyFooter from '@/components/layout/MyFooter.vue';
 
-import DateTimeComponent from './components/DateTimeComponent.vue';
+import DateTimeComponent from '@/components/common/DateTimeComponent.vue';
+import LoadingComponent from '@/components/common/LoadingComponent.vue';
 
-import Error404Component from './components/Error404Component.vue';
-import Error500Component from './components/Error500Component.vue';
-import LoadingComponent from './components/LoadingComponent.vue';
+import Error404Component from '@/components/Error404Component.vue';
+import Error500Component from '@/components/Error500Component.vue';
 
-import HomePage from './components/HomePage.vue';
-import CallbackPage from './components/CallbackPage.vue';
-import ClientsPage from './components/ClientsPage.vue';
-import ClientDetailsPage from './components/ClientDetailsPage.vue';
-import ClientCreatePage from './components/ClientCreatePage.vue';
+import HomePage from '@/components/HomePage.vue';
+import CallbackPage from '@/components/CallbackPage.vue';
+import ClientsPage from '@/components/ClientsPage.vue';
+import ClientDetailsPage from '@/components/ClientDetailsPage.vue';
+import ClientCreatePage from '@/components/ClientCreatePage.vue';
 
 
 

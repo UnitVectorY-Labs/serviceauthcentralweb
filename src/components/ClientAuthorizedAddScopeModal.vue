@@ -37,7 +37,7 @@
   
   <script>
   import { gql } from '@apollo/client/core';
-  import client from '../apollo-client';
+  import client from '@/services/apollo-client';
   
   const AUTHORIZE_ADD_SCOPE = gql`
     mutation AddScope($subject: String!, $audience: String!, $authorizedScope: String!) {
@@ -112,4 +112,3 @@
     }
   };
   </script>
-  

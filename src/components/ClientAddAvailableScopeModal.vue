@@ -37,7 +37,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const ADD_CLIENT_AVAILABLE_SCOPE = gql`
     mutation AddClientAvailableScope($clientId: String!, $availableScope: ClientScopeInput!) {

@@ -1,6 +1,6 @@
 // src/services/authService.js
 import PKCE from 'js-pkce';
-import store from '../store'; 
+import store from '@/store'; 
 
 const pkce = new PKCE({
     client_id: 'provider:github',

@@ -5,7 +5,7 @@
         <h3>Client Available Scopes</h3>
         <span class="text-muted">The list of scopes this client recognizes that can be requested by another client if authorization is granted.</span>
         <table class="table table-striped table-hover">
-        <thead class="table-dark">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">Scope</th>
                     <th scope="col">Description</th>
@@ -42,7 +42,7 @@
 
 <script>
 
-import ClientAddAvailableScopeModal from './ClientAddAvailableScopeModal.vue';
+import ClientAddAvailableScopeModal from '@/components/ClientAddAvailableScopeModal.vue';
 
 export default {
     props: ['client'],

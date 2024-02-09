@@ -35,7 +35,7 @@
 
 <script>
 import { gql } from '@apollo/client/core';
-import client from '../apollo-client';
+import client from '@/services/apollo-client';
 
 const GENERATE_CLIENT_SECRET_1 = gql`
     mutation GenerateClientSecret1($clientId: String!) {

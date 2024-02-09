@@ -37,9 +37,9 @@
 
 <script>
 
-import ClientDeleteModal from './ClientDeleteModal.vue';
+import ClientDeleteModal from '@/components/ClientDeleteModal.vue';
 
-import apollo from '../apollo-client';
+import apollo from '@/services/apollo-client';
 
 export default {
     props: ['client'],

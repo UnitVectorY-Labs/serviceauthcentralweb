@@ -68,10 +68,10 @@
 
 <script>
 
-import ClientAuthorizeModal from './ClientAuthorizeModal.vue';
-import ClientDeauthorizeModal from './ClientDeauthorizeModal.vue';
-import ClientAuthorizedRemoveScopeModal from './ClientAuthorizedRemoveScopeModal.vue';
-import ClientAuthorizedAddScopeModal from './ClientAuthorizedAddScopeModal.vue';
+import ClientAuthorizeModal from '@/components/ClientAuthorizeModal.vue';
+import ClientDeauthorizeModal from '@/components/ClientDeauthorizeModal.vue';
+import ClientAuthorizedRemoveScopeModal from '@/components/ClientAuthorizedRemoveScopeModal.vue';
+import ClientAuthorizedAddScopeModal from '@/components/ClientAuthorizedAddScopeModal.vue';
 
 export default {
     props: ['client'],

@@ -23,7 +23,7 @@
   
   <script>
   import { gql } from '@apollo/client/core';
-  import client from '../apollo-client';
+  import client from '@/services/apollo-client';
   
   const AUTHORIZE_REMOVE_SCOPE = gql`
       mutation RemoveScope($subject: String!, $audience: String!, $authorizedScope: String!) {
@@ -84,4 +84,3 @@
     }
   };
   </script>
-  
