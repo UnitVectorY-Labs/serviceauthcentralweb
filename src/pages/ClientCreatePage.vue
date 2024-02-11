@@ -5,13 +5,13 @@
       <div class="row mb-3">
         <label for="clientId" class="col-sm-2 col-form-label text-end">Client Id</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="clientId" v-model="clientId" :disabled="loading">
+          <input type="text" class="form-control" id="clientId" v-model="clientId" :disabled="loading" />
         </div>
       </div>
       <div class="row mb-3">
         <label for="description" class="col-sm-2 col-form-label text-end">Description</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="description" v-model="description" :disabled="loading">
+          <input type="text" class="form-control" id="description" v-model="description" :disabled="loading" />
         </div>
       </div>
       <div class="row mb-3">
@@ -54,19 +54,19 @@ export default {
       this.loading = true;
       this.errorMessage = null;
       try {
-        await client.mutate({ 
-          mutation: ADD_CLIENT, 
-          variables: { clientId: this.clientId, description: this.description }
+        await client.mutate({
+          mutation: ADD_CLIENT,
+          variables: { clientId: this.clientId, description: this.description },
         });
         client.resetStore(); // Reset local cache after mutation
         this.$router.push('/clients/' + this.clientId);
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error('Error submitting form:', error);
         this.errorMessage = error.message;
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
 };
 </script>

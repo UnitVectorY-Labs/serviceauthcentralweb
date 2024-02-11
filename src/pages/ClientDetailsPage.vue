@@ -1,42 +1,42 @@
 <template>
-    <div class="container mt-4">
-      <div v-if="serverError">
-        <Error500Component/>
-      </div>
-      <div v-else-if="notFound">
-        <Error404Component/>
-      </div>
-      <div v-else-if="client" v-show="!loading">
-
-        <div class="row">
-          <div class="col-lg-6 col-sm-12">
-            <ClientInfoComponent :client="client" />
-            <ClientAvailableScopesComponent :client="client" @refreshClient="refreshClient" />
-          </div>
-
-          <div class="col-lg-6 col-sm-12">
-            <ClientJwtBearerComponent :client="client" @refreshClient="refreshClient" />
-            <ClientSecretsComponent :client="client" @refreshClient="refreshClient" />
-          </div>
+  <div class="container mt-4">
+    <div v-if="serverError">
+      <Error500Component />
+    </div>
+    <div v-else-if="notFound">
+      <Error404Component />
+    </div>
+    <div v-else-if="client" v-show="!loading">
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <ClientInfoComponent :client="client" />
+          <ClientAvailableScopesComponent :client="client" @refreshClient="refreshClient" />
         </div>
-        <div class="row">
 
-          <div class="col-lg-6 col-sm-12">
-            <ClientAuthorizedAsSubjectComponent :client="client" />
-          </div>
-
-          <div class="col-lg-6 col-sm-12" v-if="client.managementPermissions.canAddAuthorization || client.managementPermissions.canDeleteAuthorization" >
-            <ClientAuthorizedAsAudienceComponent :client="client" @refreshClient="refreshClient" />
-          </div>
+        <div class="col-lg-6 col-sm-12">
+          <ClientJwtBearerComponent :client="client" @refreshClient="refreshClient" />
+          <ClientSecretsComponent :client="client" @refreshClient="refreshClient" />
         </div>
       </div>
-      <div v-if="loading">
-          <LoadingComponent />
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <ClientAuthorizedAsSubjectComponent :client="client" />
+        </div>
+
+        <div
+          class="col-lg-6 col-sm-12"
+          v-if="client.managementPermissions.canAddAuthorization || client.managementPermissions.canDeleteAuthorization"
+        >
+          <ClientAuthorizedAsAudienceComponent :client="client" @refreshClient="refreshClient" />
+        </div>
       </div>
     </div>
-  </template>
-  
-  
+    <div v-if="loading">
+      <LoadingComponent />
+    </div>
+  </div>
+</template>
+
 <script>
 import { gql } from '@apollo/client/core';
 import client from '@/services/apollo-client';
@@ -48,9 +48,8 @@ import ClientSecretsComponent from '@/components/ClientSecretsComponent.vue';
 import ClientAuthorizedAsSubjectComponent from '@/components/ClientAuthorizedAsSubjectComponent.vue';
 import ClientAuthorizedAsAudienceComponent from '@/components/ClientAuthorizedAsAudienceComponent.vue';
 
-
 const GET_CLIENT = gql`
-  query Client($clientId: ID!) { 
+  query Client($clientId: ID!) {
     client(clientId: $clientId) {
       clientId
       clientCreated
@@ -106,12 +105,12 @@ const GET_CLIENT = gql`
 export default {
   name: 'ClientDetailsPage',
   components: {
-      ClientInfoComponent,
-      ClientAvailableScopesComponent,
-      ClientJwtBearerComponent,
-      ClientSecretsComponent,
-      ClientAuthorizedAsSubjectComponent,
-      ClientAuthorizedAsAudienceComponent,
+    ClientInfoComponent,
+    ClientAvailableScopesComponent,
+    ClientJwtBearerComponent,
+    ClientSecretsComponent,
+    ClientAuthorizedAsSubjectComponent,
+    ClientAuthorizedAsAudienceComponent,
   },
   data() {
     return {
@@ -135,12 +134,12 @@ export default {
       this.loadClient(this.client.clientId, true);
     },
     async loadClient(clientId, refresh) {
-      if(refresh != false){
+      if (refresh != false) {
         this.loading = true;
       }
       try {
-        const { data } = await client.query({ 
-          query: GET_CLIENT, 
+        const { data } = await client.query({
+          query: GET_CLIENT,
           variables: { clientId },
           fetchPolicy: refresh ? 'network-only' : 'cache-first',
         });
@@ -151,7 +150,7 @@ export default {
           this.notFound = true;
         }
       } catch (error) {
-        console.error("Error fetching client:", error);
+        console.error('Error fetching client:', error);
         this.serverError = true;
       }
     },

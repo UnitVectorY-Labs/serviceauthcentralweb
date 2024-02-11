@@ -1,13 +1,13 @@
 // src/services/authService.js
 import PKCE from 'js-pkce';
-import store from '@/store'; 
+import store from '@/store';
 
 const pkce = new PKCE({
-    client_id: 'provider:github',
-    redirect_uri: process.env.VUE_APP_SAC_REDIRECT_URI,
-    authorization_endpoint: process.env.VUE_APP_SAC_AUTHORIAZATION_ENDPOINT,
-    token_endpoint: process.env.VUE_APP_SAC_TOKEN_ENDPOINT,
-  });
+  client_id: 'provider:github',
+  redirect_uri: process.env.VUE_APP_SAC_REDIRECT_URI,
+  authorization_endpoint: process.env.VUE_APP_SAC_AUTHORIAZATION_ENDPOINT,
+  token_endpoint: process.env.VUE_APP_SAC_TOKEN_ENDPOINT,
+});
 
 export const authorize = () => {
   const authorizationUrl = pkce.authorizeUrl();

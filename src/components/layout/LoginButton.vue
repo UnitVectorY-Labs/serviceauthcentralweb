@@ -68,10 +68,10 @@ export default {
         if (delay > 0) {
           // Set a timer to log out when the token is supposed to expire
           this.logoutTimer = setTimeout(() => {
-            console.log('Token expired, logging out...')
+            console.log('Token expired, logging out...');
             this.performSignOut();
           }, delay);
-        } else  {
+        } else {
           // Session is already expired just go ahead and log out
           this.performSignOut();
         }

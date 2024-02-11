@@ -1,49 +1,49 @@
 <template>
   <div class="container mt-4">
-      <div v-if="serverError">
-        <Error500Component/>
-      </div>
-      <div v-else-if="loading">
-        <LoadingComponent />
-      </div>
-      <div v-else>
-        <h3>Clients</h3>
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Client Id</th>
-                    <th scope="col">Description</th>
-                    <th scope="col" class="text-end">
-                      <router-link :to="'/client'" class="btn btn-success">
-                        <i class="bi bi-plus"></i>
-                      </router-link>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="edge in clients.edges" :key="edge.node.clientId">
-                    <th scope="row">{{ edge.node.clientId }}</th>
-                    <td>{{ edge.node.description }}</td>
-                    <td class="text-end">
-                      <router-link :to="'/clients/' + encodeURIComponent(edge.node.clientId)" class="btn btn-primary">
-                        <i class="bi bi-arrow-right"></i>
-                      </router-link>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="d-flex justify-content-center mb-3">
-            <div class="btn-group pagination-controls" role="group" aria-label="Pagination Controls">
-                <button @click="loadPrevious()" :disabled="!clients.pageInfo.hasPreviousPage" class="btn btn-primary">
-                    <i class="bi bi-chevron-left"></i> Previous
-                </button>
-                <button @click="loadNext()" :disabled="!clients.pageInfo.hasNextPage" class="btn btn-primary">
-                    Next <i class="bi bi-chevron-right"></i>
-                </button>
-            </div>
+    <div v-if="serverError">
+      <Error500Component />
+    </div>
+    <div v-else-if="loading">
+      <LoadingComponent />
+    </div>
+    <div v-else>
+      <h3>Clients</h3>
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Client Id</th>
+            <th scope="col">Description</th>
+            <th scope="col" class="text-end">
+              <router-link :to="'/client'" class="btn btn-success">
+                <i class="bi bi-plus"></i>
+              </router-link>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="edge in clients.edges" :key="edge.node.clientId">
+            <th scope="row">{{ edge.node.clientId }}</th>
+            <td>{{ edge.node.description }}</td>
+            <td class="text-end">
+              <router-link :to="'/clients/' + encodeURIComponent(edge.node.clientId)" class="btn btn-primary">
+                <i class="bi bi-arrow-right"></i>
+              </router-link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center mb-3">
+        <div class="btn-group pagination-controls" role="group" aria-label="Pagination Controls">
+          <button @click="loadPrevious()" :disabled="!clients.pageInfo.hasPreviousPage" class="btn btn-primary">
+            <i class="bi bi-chevron-left"></i> Previous
+          </button>
+          <button @click="loadNext()" :disabled="!clients.pageInfo.hasNextPage" class="btn btn-primary">
+            Next <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -103,7 +103,7 @@ export default {
         this.clients = data.clients;
         this.loading = false;
       } catch (error) {
-        console.error("Error fetching clients:", error);
+        console.error('Error fetching clients:', error);
         this.serverError = true;
       }
     },

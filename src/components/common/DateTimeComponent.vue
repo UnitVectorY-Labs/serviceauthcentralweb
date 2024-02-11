@@ -1,5 +1,5 @@
 <template>
-    <div class="d-inline-block custom-condensed">{{ formattedDate }}</div>
+  <div class="d-inline-block custom-condensed">{{ formattedDate }}</div>
 </template>
 
 <style>
@@ -7,7 +7,7 @@
   letter-spacing: -0.05em;
 }
 </style>
-  
+
 <script>
 import { parseISO } from 'date-fns';
 
@@ -16,8 +16,8 @@ export default {
   computed: {
     formattedDate() {
       // Defensive statement to protect this if the date is null
-      if(this.date == null){
-        return "";
+      if (this.date == null) {
+        return '';
       }
 
       const dateObj = parseISO(this.date);
@@ -35,4 +35,3 @@ export default {
   },
 };
 </script>
-  

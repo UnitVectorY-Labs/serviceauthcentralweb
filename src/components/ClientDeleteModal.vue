@@ -1,5 +1,13 @@
 <template>
-  <div class="modal fade" id="deleteClientModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteClientModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="deleteClientModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="deleteClientModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -8,12 +16,15 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-danger" role="alert">
-            Are you sure you want to delete the client "<span class="text-primary fw-bold">{{ client.clientId }}</span>" and all of its authorizations? This action cannot be undone and may result in unauthorized requests.
+            Are you sure you want to delete the client "<span class="text-primary fw-bold">{{ client.clientId }}</span
+            >" and all of its authorizations? This action cannot be undone and may result in unauthorized requests.
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" @click="confirmDelete" data-bs-dismiss="modal">Confirm Delete</button>
+          <button type="button" class="btn btn-danger" @click="confirmDelete" data-bs-dismiss="modal">
+            Confirm Delete
+          </button>
         </div>
       </div>
     </div>
@@ -34,21 +45,21 @@ const DELETE_CLIENT = gql`
 
 export default {
   props: {
-    client: Object
+    client: Object,
   },
   methods: {
     async confirmDelete() {
       try {
-        await client.mutate({ 
-          mutation: DELETE_CLIENT, 
-          variables: { clientId: this.client.clientId }
+        await client.mutate({
+          mutation: DELETE_CLIENT,
+          variables: { clientId: this.client.clientId },
         });
         this.$emit('deleted'); // Notify parent component
       } catch (error) {
-        console.error("Error deleting client:", error);
+        console.error('Error deleting client:', error);
         this.$emit('error', error); // Notify parent component of error
       }
-    }
-  }
+    },
+  },
 };
 </script>

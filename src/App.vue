@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 import MyHeader from '@/components/layout/MyHeader.vue';
 import MyFooter from '@/components/layout/MyFooter.vue';
 
@@ -17,11 +16,11 @@ export default {
     MyHeader,
     MyFooter,
   },
-}
+};
 </script>
 
 <style>
-  .flex-grow-1 {
-    flex-grow: 1;
-  }
+.flex-grow-1 {
+  flex-grow: 1;
+}
 </style>

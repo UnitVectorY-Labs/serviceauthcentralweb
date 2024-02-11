@@ -9,12 +9,12 @@ import ClientCreatePage from '@/pages/ClientCreatePage.vue';
 import Error404Component from '@/components/Error404Component.vue';
 
 const routes = [
-  { path: '/', component: HomePage, name: "ServiceAuthCentral" },
-  { path: '/callback', component: CallbackPage, name: "ServiceAuthCentral: Callback" },
-  { path: '/client', component: ClientCreatePage, name: "ServiceAuthCentral: Create Client" },
-  { path: '/clients', component: ClientsPage, name: "ServiceAuthCentral: Clients" },
-  { path: '/clients/:clientId', component: ClientDetailsPage, name: "ServiceAuthCentral: Client Details" },
-  { path: '/:catchAll(.*)', component: Error404Component, name: "ServiceAuthCentral: 404" },
+  { path: '/', component: HomePage, name: 'ServiceAuthCentral' },
+  { path: '/callback', component: CallbackPage, name: 'ServiceAuthCentral: Callback' },
+  { path: '/client', component: ClientCreatePage, name: 'ServiceAuthCentral: Create Client' },
+  { path: '/clients', component: ClientsPage, name: 'ServiceAuthCentral: Clients' },
+  { path: '/clients/:clientId', component: ClientDetailsPage, name: 'ServiceAuthCentral: Client Details' },
+  { path: '/:catchAll(.*)', component: Error404Component, name: 'ServiceAuthCentral: 404' },
 ];
 
 const router = createRouter({

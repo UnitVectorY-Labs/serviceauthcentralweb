@@ -1,19 +1,14 @@
 <template>
-    <br />
-    <div class="d-flex justify-content-center align-items-center">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+  <br />
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "LoadingComponent"
-  }
-  </script>
-  
-  <style>
-  /* You can add additional custom styles here if needed */
-  </style>
-  
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'LoadingComponent',
+};
+</script>
