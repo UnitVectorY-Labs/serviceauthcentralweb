@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.9",
+    "@apollo/client": "^3.9.4",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.8.3",
