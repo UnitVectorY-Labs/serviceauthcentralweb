@@ -40,3 +40,7 @@ VUE_APP_SAC_ISSUER=
 - `VUE_APP_SAC_AUTHORIAZATION_ENDPOINT`: The "/login/authorize" URL for ServiceAuthCentral's token server
 - `VUE_APP_SAC_TOKEN_ENDPOINT`: The "/v1/token" URL for ServiceAuthCentral's token server
 - `VUE_APP_SAC_ISSUER`: The issuer configured for ServiceAuthCentral
+
+## Test Deployments
+
+Pull requests are automatically deployed to test envirionment to allow for testing.
