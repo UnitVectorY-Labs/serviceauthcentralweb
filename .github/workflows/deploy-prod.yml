@@ -14,13 +14,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create Environment File for Production
-        run: echo ${{ vars.ENV_PRODUCTION }} > .env.production
+        run: |
+          echo "${{ vars.ENV_PRODUCTION }}" > .env.production
 
       - name: Write Firebase Configuration File (.firebaserc)
-        run: echo ${{ vars.FIREBASERC }} > .firebaserc
+        run: |
+          echo "${{ vars.FIREBASERC }}" > .firebaserc
 
       - name: Write Firebase Configuration File (firebase.json)
-        run: echo ${{ vars.FIREBASE_JSON }} > firebase.json
+        run: |
+          echo "${{ vars.FIREBASE_JSON }}" > firebase.json
 
       - name: Install Dependencies and Build Project
         run: npm ci && npm run build
