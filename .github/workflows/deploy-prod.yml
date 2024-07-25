@@ -1,0 +1,33 @@
+name: Deploy to Live Channel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy_live_website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Create Environment File for Production
+        run: echo ${{ vars.ENV_PRODUCTION }} > .env.production
+
+      - name: Write Firebase Configuration File (.firebaserc)
+        run: echo ${{ vars.FIREBASERC }} > .firebaserc
+
+      - name: Write Firebase Configuration File (firebase.json)
+        run: echo ${{ vars.FIREBASE_JSON }} > firebase.json
+
+      - name: Install Dependencies and Build Project
+        run: npm ci && npm run build
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: ${{ vars.PROJECT_ID }}
+          channelId: live
