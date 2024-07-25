@@ -3,10 +3,11 @@ name: Deploy to Preview Channel
 on:
   pull_request:
     branches:
-      - "feature/**"
+      - main
 
 jobs:
   build_and_preview:
+    if: startsWith(github.event.pull_request.head.ref, 'feature/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository Code
