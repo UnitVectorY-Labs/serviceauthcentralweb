@@ -16,18 +16,11 @@ jobs:
       - name: Create Environment File for Production
         run: echo "${{ vars.ENV_PRODUCTION }}" > .env.production
 
-      - name: Write Firebase Configuration File (.firebaserc)
-        run: |
-          echo "${{ vars.FIREBASERC }}" | jq . > .firebaserc
-
       - name: Write Firebase Configuration File (firebase.json)
         run: |
-          echo "${{ vars.FIREBASE_JSON }}" | jq . > firebase.json
-
-      - name: Validate JSON Files
-        run: |
-          jq empty .firebaserc
-          jq empty firebase.json
+          cat <<EOF > firebase.json
+          ${{ vars.FIREBASE_JSON }}
+          EOF
 
       - name: Install Dependencies and Build Project
         run: npm ci && npm run build
