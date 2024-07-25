@@ -44,3 +44,4 @@ VUE_APP_SAC_ISSUER=
 ## Test Deployments
 
 Pull requests are automatically deployed to test envirionment to allow for testing.
+Branches must start with "feature/".
