@@ -14,7 +14,9 @@
  ~ @author Jared Hatfield (UnitVectorY Labs)
 -->
 <template>
-  <div class="d-flex justify-content-end">
+
+  <div class="d-flex justify-content-end align-items-center">
+    <div v-if="isTokenSet" class="text-white me-2">{{ tokenDescription }}</div>
     <button v-if="!isTokenSet" @click="signIn" class="btn btn-primary btn-sm">Sign In</button>
     <button v-else @click="performSignOut" class="btn btn-secondary btn-sm">Sign Out</button>
   </div>
@@ -51,7 +53,7 @@ export default {
     document.removeEventListener('visibilitychange', this.handleVisibilityChange);
   },
   computed: {
-    ...mapGetters(['isTokenSet', 'tokenExpiration']),
+    ...mapGetters(['isTokenSet', 'tokenExpiration', 'tokenDescription']),
   },
   methods: {
     ...mapActions(['signOut']),

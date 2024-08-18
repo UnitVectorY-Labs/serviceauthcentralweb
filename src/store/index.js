@@ -29,6 +29,11 @@ export default createStore({
       const decoded = jwtDecode(state.token);
       return decoded.exp;
     },
+    tokenDescription: state => {
+      if (!state.token) return null;
+      const decoded = jwtDecode(state.token);
+      return decoded.description;
+    },
   },
   mutations: {
     setToken(state, newToken) {
