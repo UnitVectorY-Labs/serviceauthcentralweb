@@ -11,7 +11,7 @@
     "@apollo/client": "^3.11.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
-    "core-js": "^3.38.0",
+    "core-js": "^3.38.1",
     "date-fns": "^3.6.0",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
