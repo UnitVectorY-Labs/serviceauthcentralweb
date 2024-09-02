@@ -31,7 +31,7 @@
         </div>
         <div class="modal-body">
           <div class="alert alert-danger" role="alert">
-            Are you sure you want to delete the client "<span class="text-primary fw-bold">{{ client.clientId }}</span
+            Are you sure you want to delete the client "<span class="text-primary fw-bold text-break">{{ client.clientId }}</span
             >" and all of its authorizations? This action cannot be undone and may result in unauthorized requests.
           </div>
         </div>

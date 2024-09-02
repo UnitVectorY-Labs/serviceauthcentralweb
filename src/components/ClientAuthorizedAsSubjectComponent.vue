@@ -18,7 +18,7 @@
     <!-- Display authorizations for subjects if client is not null -->
     <h3>Authorized as Subject</h3>
     <span class="text-muted"
-      >The "<span class="text-primary fw-bold">{{ client.clientId }}</span
+      >The "<span class="text-primary fw-bold text-break">{{ client.clientId }}</span
       >" client is authorized to access the following clients.</span
     >
     <table class="table table-striped table-hover mt-2">

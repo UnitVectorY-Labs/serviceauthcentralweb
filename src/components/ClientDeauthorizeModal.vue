@@ -33,7 +33,7 @@
           <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
           <div v-else class="alert alert-danger" role="alert">
             Are you sure you want to deauthorize the client
-            <span class="text-primary fw-bold">{{ client.clientId }}</span> access to
+            <span class="text-primary fw-bold text-break">{{ client.clientId }}</span> access to
             <span class="text-primary fw-bold">{{ deauthorizedSubject }}</span
             >?
           </div>

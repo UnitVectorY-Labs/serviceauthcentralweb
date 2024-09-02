@@ -35,7 +35,7 @@
           <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
           <div v-else class="alert alert-danger" role="alert">
             Are you sure you want to deauthorize the following JWT Bearer? Doing so will result in the client "<span
-              class="text-primary fw-bold"
+              class="text-primary fw-bold text-break"
               >{{ client.clientId }}</span
             >" being unable to authenticate with this JWT Bearer.
           </div>

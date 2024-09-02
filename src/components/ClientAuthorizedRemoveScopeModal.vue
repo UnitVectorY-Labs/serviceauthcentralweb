@@ -34,7 +34,7 @@
           <div v-else class="alert alert-danger" role="alert">
             Are you sure you and to remove the authorized scope
             <span class="text-primary fw-bold">{{ removeScope }}</span> from the client
-            <span class="text-primary fw-bold">{{ client.clientId }}</span> access to
+            <span class="text-primary fw-bold text-break">{{ client.clientId }}</span> access to
             <span class="text-primary fw-bold">{{ removeSubject }}</span
             >?
           </div>
