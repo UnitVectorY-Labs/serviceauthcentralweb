@@ -14,17 +14,18 @@
  ~ @author Jared Hatfield (UnitVectorY Labs)
 -->
 <template>
-  <div class="container">
-    <footer class="border-top">
-      <ul class="nav justify-content-center">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Powered By: </a></li>
-        <li class="nav-item">
-          <a href="https://github.com/UnitVectorY-Labs/serviceauthcentralweb" class="nav-link px-2 text-body-secondary">
-            <i class="bi bi-github"></i> serviceauthcentralweb
-          </a>
-        </li>
-      </ul>
-      <p class="text-center text-body-secondary">UnitVectorY Labs</p>
+  <div class="container-fluid bg-light">
+    <footer class="border-top py-3">
+      <p class="text-center text-body-secondary mb-2">Powered By:</p>
+      <div class="d-flex justify-content-center">
+        <a href="https://github.com/UnitVectorY-Labs/ServiceAuthCentral" class="nav-link px-2 text-body-secondary" target="_blank">
+          <i class="bi bi-github"></i> ServiceAuthCentral
+        </a>
+        <a href="https://github.com/UnitVectorY-Labs/serviceauthcentralweb" class="nav-link px-2 text-body-secondary" target="_blank">
+          <i class="bi bi-github"></i> serviceauthcentralweb
+        </a>
+      </div>
+      <p class="text-center text-body-secondary fw-bold text-dark mt-2">UnitVectorY Labs</p>
     </footer>
   </div>
 </template>
