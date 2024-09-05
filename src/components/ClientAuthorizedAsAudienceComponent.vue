@@ -33,7 +33,7 @@
     <!-- Display authorizations for audiences if client is not null -->
     <h3>Authorized as Audience</h3>
     <span class="text-muted"
-      >The following clients are authorized authorized to access "<span class="text-primary fw-bold">{{
+      >The following clients are authorized authorized to access "<span class="text-primary fw-bold text-break">{{
         client.clientId
       }}</span
       >".</span

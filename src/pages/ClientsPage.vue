@@ -37,7 +37,7 @@
         </thead>
         <tbody>
           <tr v-for="edge in clients.edges" :key="edge.node.clientId">
-            <th scope="row">{{ edge.node.clientId }}</th>
+            <th scope="row"><p class="text-break">{{ edge.node.clientId }}</p></th>
             <td>{{ edge.node.description }}</td>
             <td class="text-end">
               <router-link :to="'/clients/' + encodeURIComponent(edge.node.clientId)" class="btn btn-primary">
