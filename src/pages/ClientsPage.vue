@@ -29,7 +29,7 @@
             <th scope="col">Client Id</th>
             <th scope="col">Description</th>
             <th scope="col" class="text-end">
-              <router-link :to="'/client'" class="btn btn-success">
+              <router-link :to="'/client'" class="btn btn-success" v-if="canWrite">
                 <i class="bi bi-plus"></i>
               </router-link>
             </th>
@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { gql } from '@apollo/client/core';
 import client from '@/services/apollo-client';
 
@@ -106,6 +107,9 @@ export default {
   },
   mounted() {
     this.loadClients({ first: PERPAGE });
+  },
+  computed: {
+    ...mapGetters(['canWrite']),
   },
   methods: {
     async loadClients({ first, after, last, before }) {

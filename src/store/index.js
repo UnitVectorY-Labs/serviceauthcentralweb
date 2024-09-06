@@ -34,6 +34,11 @@ export default createStore({
       const decoded = jwtDecode(state.token);
       return decoded.description;
     },
+    canWrite: state => {
+      if (!state.token) return false;
+      const decoded = jwtDecode(state.token);
+      return decoded.scope && decoded.scope.includes('Admin');
+    },
   },
   mutations: {
     setToken(state, newToken) {
