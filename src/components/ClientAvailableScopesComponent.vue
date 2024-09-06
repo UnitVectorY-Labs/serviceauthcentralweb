@@ -14,7 +14,7 @@
  ~ @author Jared Hatfield (UnitVectorY Labs)
 -->
 <template>
-  <div v-if="client.managementPermissions.canAddAvailableScope">
+  <div v-if="client.managementPermissions.canAddAvailableScope || client.availableScopes.length > 0">
     <ClientAddAvailableScopeModal
       ref="addAvailableScopeModal"
       v-if="client"
@@ -40,6 +40,7 @@
               @click="resetAddAvailableScope()"
               data-bs-target="#clientAddAvailableScopeModal"
               title="Add Available Scope"
+              v-if="client.managementPermissions.canAddAvailableScope"
             >
               <i class="bi bi-plus"></i>
             </button>
