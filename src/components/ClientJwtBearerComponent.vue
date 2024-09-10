@@ -57,25 +57,25 @@
               <tr>
                 <th>JWKS URL</th>
                 <td>
-                  <a :href="bearer.jwksUrl" target="_blank" class="my-custom-transparent-bg">{{ bearer.jwksUrl }}</a>
+                  <a :href="bearer.jwksUrl" target="_blank" class="my-custom-transparent-bg text-break">{{ bearer.jwksUrl }}</a>
                 </td>
               </tr>
               <tr>
                 <th>Issuer</th>
                 <td>
-                  <span class="font-monospace my-custom-transparent-bg">{{ bearer.iss }}</span>
+                  <span class="font-monospace my-custom-transparent-bg text-break">{{ bearer.iss }}</span>
                 </td>
               </tr>
               <tr>
                 <th>Audience</th>
                 <td>
-                  <span class="font-monospace my-custom-transparent-bg">{{ bearer.aud }}</span>
+                  <span class="font-monospace my-custom-transparent-bg text-break">{{ bearer.aud }}</span>
                 </td>
               </tr>
               <tr>
                 <th>Subject</th>
                 <td>
-                  <span class="font-monospace my-custom-transparent-bg">{{ bearer.sub }}</span>
+                  <span class="font-monospace my-custom-transparent-bg text-break">{{ bearer.sub }}</span>
                 </td>
               </tr>
             </table>
